@@ -24,12 +24,42 @@
           <h5 class="card-title m-0">Registration</h5>
         </div>
         <div class="card-body">
-          <h6 class="card-title">Special title treatment</h6>
+            <div class="form-group">
+                <label for="exampleInputEmail1">Firstname</label>
+                <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Firstname">
+            </div>
+            <div class="form-group">
+                <label for="exampleInputEmail1">Middlename</label>
+                <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Middlename">
+            </div>
+            <div class="form-group">
+                <label for="exampleInputEmail1">Lastname</label>
+                <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Lastname">
+            </div>
+            <div class="form-group">
+                <label for="exampleInputEmail1">Birthdate</label>
+                <input type="date" class="form-control" id="exampleInputEmail1" placeholder="">
+            </div>
 
-          <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-          <a href="#" class="btn btn-primary">Go somewhere</a>
+              
+            <div class="form-group">
+              <label for="exampleInputEmail1">Email address</label>
+              <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Enter email">
+            </div>
+            <div class="form-group">
+              <label for="exampleInputPassword1">Password</label>
+              <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+            </div>
+            <div class="form-group">
+                <label for="exampleInputPassword1">Confirm Password</label>
+                <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Confirm Password">
+              </div>
+            </div>
+            <div class="card-footer">
+                <button class="btn btn-success btn-block">Sign Up</button>
+            </div>
         </div>
-      </div>
+        
     </div>
     <!-- /.col-md-6 -->
   </div>
