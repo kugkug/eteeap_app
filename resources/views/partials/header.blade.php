@@ -45,10 +45,10 @@
             <!-- Left navbar links -->
             <ul class="navbar-nav">
               <li class="nav-item">
-                <a href="#" class="nav-link text-white">Home</a>
+                <a href="registration" class="nav-link text-white">Registration</a>
               </li>
               <li class="nav-item">
-                <a href="#" class="nav-link text-white">Contact</a>
+                <a href="profile" class="nav-link text-white">Profile</a>
               </li>
             </ul>
     
