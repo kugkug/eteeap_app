@@ -40,7 +40,6 @@
                 <label for="exampleInputEmail1">Birthdate</label>
                 <input type="date" class="form-control" id="exampleInputEmail1" placeholder="">
             </div>
-
               
             <div class="form-group">
               <label for="exampleInputEmail1">Email address</label>

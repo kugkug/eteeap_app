@@ -26,3 +26,21 @@ body {
         height: 40px;
     }
 }
+
+.div-requirements {
+    img {
+        width: 100px !important;
+        height: 100px !important;
+
+        &:hover {
+            border: 1px solid #007bff;
+            cursor: pointer;
+        }
+    }
+}
+
+.div-viewer {
+    img {
+        width: 100% !important;
+    }
+}
