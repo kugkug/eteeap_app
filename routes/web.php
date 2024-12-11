@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ExecApplicantController;
 use Illuminate\Support\Facades\Route;
 
 // Route::get('/', function () {
@@ -16,4 +17,11 @@ Route::get('/registration', function () {
 
 Route::get('/profile', function () {
     return view('pages.profile');
+});
+
+Route::group(['prefix' => 'execute'], function() {
+    Route::group(['prefix' => 'applicants'], function() {
+        Route::post('/save', [ExecApplicantController::class, 'save'])->name('applicants_save');
+        Route::post('/list', [ExecApplicantController::class, 'list'])->name('agents_list');
+    });
 });

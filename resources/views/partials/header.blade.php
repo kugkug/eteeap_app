@@ -7,7 +7,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <meta name="_token" content="{!! csrf_token() !!}" />
     <meta name="_url" content="{!! URL::to('/') !!}" />
-    <link rel="shortcut icon" href="{{ asset('images/logo2.jpg') }}" type="image/x-icon">
+    <link rel="shortcut icon" href="{{ asset('images/au_logo.png') }}" type="image/x-icon">
     
 
     <link rel="stylesheet" href="{{ asset('adminlte3.2/plugins/fontawesome-free/css/all.min.css') }} ">
