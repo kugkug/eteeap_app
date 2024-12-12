@@ -17,7 +17,7 @@ class ExecApplicantController extends Controller
                 return globalHelper()->ajaxErrorResponse($response['message']);
             } else {
                 return globalHelper()->ajaxSuccessResponse(
-                    "_confirm('Successfully registered, please verify your email!', '/verify-email');"
+                    "_confirmUpdate('Successfully registered, please verify your email!', '/verify-email');"
                 );
             }
         } catch (Exception $e) {
