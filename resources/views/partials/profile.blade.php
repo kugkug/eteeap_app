@@ -3,8 +3,13 @@
       <div class="text-center">
         <img class="profile-user-img img-fluid img-circle" src="{{ asset('images/au_logo.png') }}" alt="User profile picture">
       </div>
+      
+      <h3 class="profile-username text-center">
 
-      <h3 class="profile-username text-center">Juan Dela Cruz</h3>
+        {{ ucfirst(strtolower($current_user->firstname)) }}
+        {{ ucfirst(strtolower($current_user->middlename)) }}
+        {{ ucfirst(strtolower($current_user->lastname)) }}
+      </h3>
 
       <p class="text-muted text-center">Software Engineer</p>
 
@@ -46,9 +51,9 @@
 
       <hr>
 
-      <strong><i class="far fa-file-alt mr-1"></i> Notes</strong>
+      {{-- <strong><i class="far fa-file-alt mr-1"></i> Notes</strong> --}}
 
-      <p class="text-muted">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam fermentum enim neque.</p>
+      {{-- <p class="text-muted">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam fermentum enim neque.</p> --}}
     </div>
     <!-- /.card-body -->
   </div>

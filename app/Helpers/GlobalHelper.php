@@ -27,7 +27,7 @@ class GlobalHelper {
         $viewData['settings'] = $request->current_user_settings ? 
         [ 'theme_class' => $themes[$request->current_user_settings['theme_mode']] ] :
         [ 'theme_class' => $themes['light'] ];
-
+        
         return $viewData;
     }
 

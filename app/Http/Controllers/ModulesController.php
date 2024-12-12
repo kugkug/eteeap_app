@@ -25,7 +25,11 @@ class ModulesController extends Controller {
         return view('pages.verify_email', ['email' => $email]);
     }
 
-    public function profile() {
-        return view('pages.dashboard');
+    public function profile(Request $request) {
+        
+        return globalHelper()->makeView('pages.dashboard', [], $request)->with([
+            'current_user' => $request->current_user,
+        ]);
+
     }
 }

@@ -9,7 +9,7 @@
 		<section class="container">
 			<div class="row justify-content-around">
 				<div class="col-md-3">
-					<a href="/requirements">
+					<a href="#">
 						<div class="small-box bg-default box-button">
 							<div class="inner text-center">
 								<i class="fas fa-suitcase"></i>
@@ -19,7 +19,7 @@
 					</a>
 				</div>
 				<div class="col-md-3">
-					<a href="/manufacturers">
+					<a href="#">
 						<div class="small-box bg-default box-button">
 							<div class="inner text-center">
 								<i class="fas fa-user-tie"></i>
@@ -31,7 +31,7 @@
 				</div>
 
 				<div class="col-md-3">
-					<a href="/education">
+					<a href="#">
 						<div class="small-box bg-default box-button">
 							<div class="inner text-center">
 								<i class="fas fa-user-graduate"></i>
@@ -45,7 +45,7 @@
 	
 			<div class="row justify-content-around">
 				<div class="col-md-3">
-					<a href="/requirements">
+					<a href="#">
 						<div class="small-box bg-default box-button">
 							<div class="inner text-center">
 								<i class="fas fa-user-tag"></i>
@@ -55,7 +55,7 @@
 					</a>
 				</div>
 				<div class="col-md-3">
-					<a href="/manufacturers">
+					<a href="#">
 						<div class="small-box bg-default box-button">
 							<div class="inner text-center">
 								<i class="fas fa-calendar-alt"></i>
@@ -66,7 +66,7 @@
 				</div>
 
 				<div class="col-md-3">
-					<a href="/education">
+					<a href="#">
 						<div class="small-box bg-default box-button">
 							<div class="inner text-center">
 								<i class="fas fa-comments"></i>

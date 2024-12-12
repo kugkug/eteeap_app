@@ -45,11 +45,13 @@
             <!-- Left navbar links -->
             <ul class="navbar-nav">
               <li class="nav-item">
-                <a href="dashboard" class="nav-link text-white">Dashboard</a>
+                <a href="dashboard" class="nav-link text-white">
+                  <i class="fa fa-home"></i> Home
+                </a>
               </li>
-              <li class="nav-item">
+              {{-- <li class="nav-item">
                 <a href="profile" class="nav-link text-white">Profile</a>
-              </li>
+              </li> --}}
               
             </ul>
     
