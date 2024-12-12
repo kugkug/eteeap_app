@@ -25,4 +25,46 @@ class ExecApplicantController extends Controller
             return globalHelper()->ajaxErrorResponse('');
         } 
     }
+
+    public function login(Request $request) {
+        try {
+            $response = apiHelper()->execute($request, '/api/login', 'POST');
+            if ($response['status'] === 'error') {
+                return back()->withErrors([
+                    'message' => $response['message']
+                ])->onlyInput('email');
+            }
+
+            apiHelper()->custom_session(
+                $request,
+                'set',
+                [
+                    'sess_token_type' => $response['info']['token_type'],
+                    'sess_token' => $response['info']['access_token']
+                ],
+            );
+            
+            
+            return redirect('/dashboard');
+
+        } catch (Exception $e) {
+            Log::channel('info')->info($e->getMessage());
+            return globalHelper()->webErrorResponse('');
+        }
+    }
+
+    public function logout(Request $request) {
+        $response = apiHelper()->execute($request, '/api/logout', 'GET');
+
+        if ($response['status'] === 'error') {
+            return back()->withErrors([
+                'message' => $response['info']['message']
+            ])->onlyInput('email');
+        }
+
+        apiHelper()->custom_session($request, 'flush', '');
+        $request->session()->invalidate();
+
+        return redirect('/');
+    }
 }

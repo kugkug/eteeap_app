@@ -18,9 +18,9 @@ class CurrentUserInfo
     public function handle(Request $request, Closure $next): Response
     {
         $user_id = Auth::id();
-        $user_settings = UserSettings::where('user_id', $user_id)->get();
-        $current_setting = (!$user_settings->isEmpty()) ? $user_settings->toArray()[0] : [];
-        $request->merge(['current_user' => Auth::user(), 'current_user_settings' => $current_setting]);
+        // $user_settings = UserSettings::where('user_id', $user_id)->get();
+        // $current_setting = (!$user_settings->isEmpty()) ? $user_settings->toArray()[0] : [];
+        $request->merge(['current_user' => Auth::user()]);
         
         return $next($request);
     }

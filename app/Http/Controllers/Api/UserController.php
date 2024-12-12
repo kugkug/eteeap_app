@@ -48,6 +48,7 @@ class UserController extends Controller
             $mail = globalHelper()->sendEmail('registration', $email, [
                 'otp' => $otp,
                 'fname' => $firstname,
+                'link' => url("/verify-email?email=").base64_encode($email),
             ]);
             
             DB::commit();
@@ -81,17 +82,19 @@ class UserController extends Controller
     }
 
     public function verifyEmail(Request $request) {
+        
         $validated = validatorHelper()->validate('verify_email', $request);
+        
         if ($validated['status'] === "error") {
             return $validated;
         }
-
+        
         DB::beginTransaction();
         try {
 
             $otp = globalHelper()->confirmOtp(
                 $validated['validated']['email'],
-                $validated['validated']['otp'],
+                strtoupper($validated['validated']['otp']),
             );
 
             if ($otp['status'] == 'ok') {
@@ -99,6 +102,7 @@ class UserController extends Controller
                 Otp::where('identity', $validated['validated']['email'])->update(['is_verified' => 1]);
             
                 DB::commit();
+                
                 return [
                     'status' => 'done'
                 ];
@@ -160,40 +164,10 @@ class UserController extends Controller
 
     }
     
-    public function registerAdminUser(Request $request) {
-        try {
-            $admin_data = Validator::make($request->all(), [
-                'firstname' => 'required|max:255',
-                'middlename' => 'sometimes|max:255',
-                'lastname' => 'required|max:255',
-                'email' => 'required|email|max:255',
-                'password' => 'required|max:255',
-                'user_type' => 'required',
-                'status' => 'required|integer',
-            ]);
-            
-            if ($admin_data->fails()) {
-                throw new GlobalException($admin_data->errors()->first());
-            }
-
-            $admin_saved = User::create($admin_data->validated());
-            return response()->json($admin_saved);
-            
-        } catch(GlobalException $ge) {
-            Log::channel('info')->info($ge->getMessage());
-            throw new GlobalException($ge->getMessage());
-        } catch (Exception $e) {
-            Log::channel('info')->info($e->getMessage());
-            throw new GlobalException();
-        }
-    }
-
     public function login(Request $request) {
         
         try {
             $key = 'email';
-            $user_types = config('custom.user_type');
-
             $admin_data = $request->validate([
                 'email' => 'required|string',
                 'password' => 'required',
@@ -203,7 +177,7 @@ class UserController extends Controller
                 $key = 'username';
                 // throw new GlobalException('Invalid Username or Password', 400);
                 $admin_data = [
-                    'username' => $admin_data['email'],
+                    'email' => $admin_data['email'],
                     'password' => $admin_data['password'],
                 ];
 
@@ -220,7 +194,6 @@ class UserController extends Controller
                     'user_id' => Auth::id(),
                     'access_token' => $user->createToken('api_token')->plainTextToken,
                     'token_type' => 'Bearer',
-                    'user_type' => strtolower($user_types[$user->user_type])
                 ],
             ]);
 

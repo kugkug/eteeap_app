@@ -59,7 +59,10 @@
         <div class="content">            
             <p>Hi {{ $data['fname'] }}, </p>
             <p>We're happy to signed up for Arellano University - ETEEAP App.</p>
-            <p>To start exploring and uploading your documents please verify your email with the code below.</p>
+            <p>
+                To start exploring and uploading your documents, please verify your email 
+                <a href='{{ $data['link'] }}'> here </a> using the code below.
+            </p>
             <br />
 
             <p class="otp">{{ $data['otp'] }}</p>

@@ -50,6 +50,9 @@
               <li class="nav-item">
                 <a href="profile" class="nav-link text-white">Profile</a>
               </li>
+              <li class="nav-item">
+                <a href="/execute/applicants/logout" class="nav-link text-white">Log Out</a>
+              </li>
             </ul>
     
             <!-- SEARCH FORM -->

@@ -94,10 +94,10 @@ class GlobalHelper {
     public function confirmOtp(string $identity, string $req_otp): array {
 
         try {
-            $otp_data = Otp::where('identity', $identity)->get();
+            $otp_data = Otp::where('identity', $identity)->first();
             if ($otp_data) {
 
-                $otp_data_arr = $otp_data->toArray()[0];
+                $otp_data_arr = $otp_data->toArray();
                 $otp = $otp_data_arr['otp'];
                 $is_verified = $otp_data_arr['is_verified'];
                 $created_at = Carbon::parse($otp_data_arr['updated_at']);

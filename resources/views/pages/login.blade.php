@@ -24,21 +24,31 @@
         <div class="card-body login-card-body">
             <p class="login-box-msg">ETEEAP</p>
       
-            <form action="../../index3.html" method="post">
+            <form method="post" action="/execute/login">
+              @csrf
               <div class="input-group mb-3">
-                <input type="email" class="form-control" placeholder="Email">
+                <input type="text" name="email" class="form-control" placeholder="Username" value="{{ old('email')}}">
                 <div class="input-group-append">
-                  <div class="input-group-text">
-                    <span class="fas fa-envelope"></span>
-                  </div>
+                    <div class="input-group-text">
+                        <span class="fas fa-user"></span>
+                    </div>
                 </div>
-              </div>
-              <div class="input-group mb-3">
-                <input type="password" class="form-control" placeholder="Password">
+            </div>
+            <div class="input-group mb-3">
+                <input type="password" name="password" class="form-control" placeholder="Password">
                 <div class="input-group-append">
-                  <div class="input-group-text">
-                    <span class="fas fa-lock"></span>
-                  </div>
+                    <div class="input-group-text">
+                        <span class="fas fa-lock"></span>
+                    </div>
+                </div>
+            </div>
+              <div class="row">
+                <div class="col-12">
+                @error('message')
+                      <p class="text-danger">
+                          {{$message}}
+                      </p>
+                  @enderror
                 </div>
               </div>
               <div class="row">
@@ -52,10 +62,12 @@
                 </div>
                 <!-- /.col -->
                 <div class="col-4">
+                  
                   <button type="submit" class="btn btn-primary btn-block">Sign In</button>
                 </div>
                 <!-- /.col -->
               </div>
+              
             </form>
       
 
