@@ -26,6 +26,6 @@ class ModulesController extends Controller {
     }
 
     public function profile() {
-        return view('pages.profile');
+        return view('pages.dashboard');
     }
 }

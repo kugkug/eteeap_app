@@ -44,3 +44,27 @@ body {
         width: 100% !important;
     }
 }
+
+.box-button {
+    min-height: 155px;
+    width: 100%;
+    padding: 0px !important;
+    text-align: center;
+    border: 2px solid #8ec2fa;
+    border-radius: 5px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+}
+
+.box-button i {
+    font-size: 40px;
+}
+.box-button p {
+    font-size: 20px;
+}
+
+.box-button div.inner {
+    padding-top: 10px;
+    margin: 0px;
+}

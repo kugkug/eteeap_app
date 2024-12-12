@@ -45,14 +45,12 @@
             <!-- Left navbar links -->
             <ul class="navbar-nav">
               <li class="nav-item">
-                <a href="registration" class="nav-link text-white">Registration</a>
+                <a href="dashboard" class="nav-link text-white">Dashboard</a>
               </li>
               <li class="nav-item">
                 <a href="profile" class="nav-link text-white">Profile</a>
               </li>
-              <li class="nav-item">
-                <a href="/execute/applicants/logout" class="nav-link text-white">Log Out</a>
-              </li>
+              
             </ul>
     
             <!-- SEARCH FORM -->
@@ -155,6 +153,19 @@
                 <a href="#" class="dropdown-item dropdown-footer">See All Notifications</a>
               </div>
             </li>
+            <li class="nav-item dropdown">
+						
+              <a class="nav-link text-white" data-toggle="dropdown" href="#" aria-expanded="true">
+                <i class="fa fa-user"></i>
+              </a>
+              <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
+              
+                <a href="/execute/applicants/logout" class="nav-link">
+                  <i class="fas fa-sign-out-alt"></i> Log Out
+                </a>
+                  
+              </div>
+          </li>
            
           </ul>
         </div>
