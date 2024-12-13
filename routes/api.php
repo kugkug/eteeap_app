@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\DocumentController;
 use App\Http\Controllers\Api\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -19,4 +20,8 @@ Route::post('test-mailer', [UserController::class, 'send_email']);
 
 Route::middleware(['auth:sanctum', 'current_user'])->group(function() {
     Route::get('logout', [UserController::class, 'logout'])->name('api_logout_logout');
+
+    Route::group(['prefix' => 'document'], function() {
+        Route::post('/upload', [DocumentController::class, 'upload'])->name('api_upload_document');
+    });
 });

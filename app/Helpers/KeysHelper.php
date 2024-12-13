@@ -18,6 +18,7 @@ class KeysHelper {
         'ContactNo' => "phone",
         'ConfirmPassword' => "confirm_password",
         "Deposit"=> "deposit",
+        "Document"=> "document",
         'Email' => "email",
         'EmployeeID' => "emp_id",
         'FirstName' => "firstname",

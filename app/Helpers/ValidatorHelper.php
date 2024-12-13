@@ -86,6 +86,12 @@ class ValidatorHelper {
                 ];
             break;
 
+            case 'document_upload':
+                return [
+                    'document' => "required|mimes:pdf|max:20000",
+                ];
+            break;
+
             case 'players_save':
                 return [
                     'photo' => "required|image|mimes:jpeg,png,jpg,gif|max:2048",

@@ -57,6 +57,13 @@ return [
             'throw' => false,
         ],
 
+        'upload_document' => [
+            'driver' => 'local',
+            'root' => public_path()."/documents",
+            'visibility' => 'public',
+            'throw' => false,
+        ],
+
     ],
 
     /*

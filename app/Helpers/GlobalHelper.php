@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace App\Helpers;
 
 use App\Mail\EteeapMailer;
+use App\Models\Document;
 use App\Models\Otp;
 use Carbon\Carbon;
 use Exception;
@@ -136,7 +137,19 @@ class GlobalHelper {
                 'status' => 'error',
                 'message' => 'System Error'
             ];
-        }
+        }       
+    }
+
+    public function getApplicantDocuments(int $user_id): array {
         
+        try {
+            $documents = Document::where('user_id', $user_id)->get(); 
+            return $documents->toArray();
+
+        } catch(Exception $e) {
+            
+            Log::channel('info')->info("Exception : ".$e->getMessage());
+            return [];
+        }       
     }
 }
