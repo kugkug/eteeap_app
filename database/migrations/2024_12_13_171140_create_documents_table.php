@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->bigInteger('user_id')->constrained('users');
             $table->string('filename');
+            $table->string('original_filename');
             $table->timestamps();
             $table->softDeletes();
         });
