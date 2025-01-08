@@ -32,30 +32,6 @@
 				</div>
 
 				<div class="col-md-3">
-					<a href="education">
-						<div class="small-box bg-default box-button">
-							<div class="inner text-center">
-								<i class="fas fa-user-graduate"></i>
-								<p class="mt-3">EDUCATION</p>
-							</div>
-						</div>
-					</a>
-				</div>
-				
-			</div>
-	
-			<div class="row justify-content-around">
-				<div class="col-md-3">
-					<a href="experience">
-						<div class="small-box bg-default box-button">
-							<div class="inner text-center">
-								<i class="fas fa-user-tag"></i>
-								<p class="mt-3">EXPERIENCE</p>
-							</div>
-						</div>
-					</a>
-				</div>
-				<div class="col-md-3">
 					<a href="timeline">
 						<div class="small-box bg-default box-button">
 							<div class="inner text-center">
@@ -66,7 +42,7 @@
 					</a>
 				</div>
 
-				<div class="col-md-3">
+				{{-- <div class="col-md-3">
 					<a href="messages">
 						<div class="small-box bg-default box-button">
 							<div class="inner text-center">
@@ -75,7 +51,33 @@
 							</div>
 						</div>
 					</a>
-				</div>
+				</div> --}}
+
+				{{-- <div class="col-md-3">
+					<a href="education">
+						<div class="small-box bg-default box-button">
+							<div class="inner text-center">
+								<i class="fas fa-user-graduate"></i>
+								<p class="mt-3">EDUCATION</p>
+							</div>
+						</div>
+					</a>
+				</div> --}}
+				
+			</div>
+	
+			<div class="row justify-content-around">
+				{{-- <div class="col-md-3">
+					<a href="experience">
+						<div class="small-box bg-default box-button">
+							<div class="inner text-center">
+								<i class="fas fa-user-tag"></i>
+								<p class="mt-3">EXPERIENCE</p>
+							</div>
+						</div>
+					</a>
+				</div> --}}
+				
 				
 			</div>
 

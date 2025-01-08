@@ -11,7 +11,7 @@ class ExecDocumentController extends Controller
     public function upload(Request $request) {
         try {
             $response = apiHelper()->execute($request, '/api/document/upload', 'POST');
-            
+
             if ($response['status'] == "error") {
                 return globalHelper()->ajaxErrorResponse($response['message']);
             } else {

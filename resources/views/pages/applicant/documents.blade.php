@@ -33,7 +33,7 @@
 								<div>
 									<span class="choose-file-button">Choose file</span>
 									<span class="file-message">or drag and drop files here</span>
-									<input class="file-input" type="file">
+									<input class="file-input" type="file" multiple>
 									<br />
 								
 								</div>
@@ -43,8 +43,8 @@
 					</div>
 
 					<div class="row d-none">
-						<div class="col-md-12">					
-							<iframe src="" frameborder="0" id="file-to-upload"></iframe>
+						<div class="col-md-12" id="file-to-upload">
+
 						</div>
 					</div>
 						
@@ -61,7 +61,16 @@
 					</div>
 				</div>
 			</div>
-		</form>				
+		</form>	
+		
+		<?php
+			$requirements_type = array_map(function($type) {
+				return $type['id'] . "|".$type['title'];
+			}, $req_types);
+		?>
+		
+		<input type="hidden" value="{{join("||", $requirements_type)}}" id="txtReqTypes">
+		
     </div>
 </div>
 

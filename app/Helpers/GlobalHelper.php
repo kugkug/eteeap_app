@@ -6,6 +6,7 @@ namespace App\Helpers;
 use App\Mail\EteeapMailer;
 use App\Models\Document;
 use App\Models\Otp;
+use App\Models\Requirement;
 use Carbon\Carbon;
 use Exception;
 use Illuminate\Http\JsonResponse;
@@ -151,5 +152,17 @@ class GlobalHelper {
             Log::channel('info')->info("Exception : ".$e->getMessage());
             return [];
         }       
+    }
+
+    public function getRequirementTypes(): array {
+        try {
+            $req_types = Requirement::get();
+            return $req_types->toArray();
+
+        } catch(Exception $e) {
+            
+            Log::channel('info')->info("Exception : ".$e->getMessage());
+            return [];
+        }   
     }
 }

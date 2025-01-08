@@ -15,36 +15,67 @@ class DocumentController extends Controller
 {
     public function upload(Request $request) {
         try {
-            $validated = validatorHelper()->validate('document_upload', $request);
+            // $validated = validatorHelper()->validate('document_upload', $request);
             
-            if ($validated['status'] === "error") {
-                return $validated;
-            }
+            // if ($validated['status'] === "error") {
+            //     return $validated;
+            // }
             
-            if (isset($validated['validated']['document'])) {
-                $image = $request->file('Document');
+            // if (isset($validated['validated']['document'])) {
+            //     $image = $request->file('Document');
                 
-                $ext = $image->getClientOriginalExtension();
-                $filename = Auth::id()."_".date("YmdHis") .".".$ext;
-                $orig = $image->getClientOriginalName();
-                $request->file('Document')->storeAs('', $filename, 'upload_document');
-                $validated['validated']['photo'] = $filename;
+            //     $ext = $image->getClientOriginalExtension();
+            //     $filename = Auth::id()."_".date("YmdHis") .".".$ext;
+            //     $orig = $image->getClientOriginalName();
+            //     $request->file('Document')->storeAs('', $filename, 'upload_document');
+            //     $validated['validated']['photo'] = $filename;
 
-                $document_data = [
+            //     $document_data = [
+            //         'user_id' => Auth::id(),
+            //         'original_filename' => $orig,
+            //         'filename' => $filename,
+            //     ];
+
+            //     $company = Document::create($document_data);
+
+            //     return [
+            //         'status' => 'ok',
+            //         'info' => $company,
+            //     ];
+            // }
+            
+            $files = $request->file('Documents');
+            
+            $req_types = $request->Types;
+
+            $document_data = [];
+            $x = 0;
+            foreach($files as $file) {
+                $type = $req_types[$x];
+                
+                $ext = $file->getClientOriginalExtension();
+                $orig = str_replace("'", "", $file->getClientOriginalName());
+                $orig_file = str_replace(".pdf", "", $orig);
+                $filename = Auth::id()."_".str_replace(" ", "_", $orig_file).".".$ext;
+                $file->storeAs('', $filename, 'upload_document');
+                
+                $document_data[] = [
                     'user_id' => Auth::id(),
+                    'requirement_id' => $type,
                     'original_filename' => $orig,
                     'filename' => $filename,
                 ];
 
-                $company = Document::create($document_data);
-
-                return [
-                    'status' => 'ok',
-                    'info' => $company,
-                ];
+                $x++;
             }
+
+            Document::insert($document_data);
+
+            return [
+                'status' => 'ok',
+                'info' => '',
+            ];
             
-            return ['status' => 'error'];
 
         } catch(GlobalException $ge) {
             Log::channel('info')->info("Global : ".$ge->getMessage());

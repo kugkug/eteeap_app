@@ -5,67 +5,71 @@ $(document).ready(function () {
         $(file).off();
         $(file).click();
         $(file).on("change", function (e) {
-            var nSize = $(this).get(0).files[0].size;
-            var sFileName = $(this).get(0).files[0].name;
-            var sFullPath = URL.createObjectURL(e.target.files[0]);
+            let fileLength = $(this).get(0).files.length;
+            let files = $(this).get(0).files;
+            let invalidCnt = 0;
+            let iframes = "";
+            let idCnt = 0;
 
-            var aFileName = sFileName.split(".");
-            var sFileType = aFileName[aFileName.length - 1].toLowerCase();
+            for (const file of files) {
+                let nSize = file.size;
+                var sFileName = file.name;
+                let sFullPath = URL.createObjectURL(file);
 
-            var fSExt = new Array("Bytes", "KB", "MB", "GB"),
-                h = 0;
-            while (nSize > 900) {
-                nSize /= 1024;
-                h++;
-            }
+                let aFileName = sFileName.split(".");
+                let sFileType = aFileName[aFileName.length - 1].toLowerCase();
 
-            var vFileName = "";
-            var sInvalid = "";
-            var sTooLarge = "";
-            var sWrongCamp = "";
-
-            var nExactSize = Math.ceil(Math.ceil(nSize * 100) / 100);
-            var vSizeCat = fSExt[h];
-            var sSize = nExactSize + "" + vSizeCat;
-
-            if (sFileType != "pdf") {
-                sInvalid += sFileName + " - " + sFileType + ".<br />";
-            } else {
-                if (h < 3) {
-                    if (h == 2 && nExactSize > 25) {
-                        sTooLarge += sFileName + " - " + sSize + ".<br />";
-                    } else {
-                        vFileName += sFileName + "\n\n";
-                    }
-                } else {
-                    sTooLarge += sFileName + " - " + sSize + ".<br />";
+                var fSExt = new Array("Bytes", "KB", "MB", "GB"),
+                    h = 0;
+                while (nSize > 900) {
+                    nSize /= 1024;
+                    h++;
                 }
+
+                var nExactSize = Math.ceil(Math.ceil(nSize * 100) / 100);
+                var vSizeCat = fSExt[h];
+                var sSize = nExactSize + "" + vSizeCat;
+
+                if (sFileType != "pdf") {
+                    invalidCnt++;
+                } else {
+                    if (h < 3) {
+                        if (h == 2 && nExactSize > 25) {
+                            invalidCnt++;
+                        }
+                    } else {
+                        invalidCnt++;
+                    }
+                }
+
+                let selId = "sel-req-type-" + idCnt;
+                iframes += `
+                                <div class="card card-outline card-primary" id="div-document-${idCnt}">
+                                    <div class="card-header">
+                                        ${dropReqTypes(selId)}
+                                    </div>
+                                    <div class="card-body">
+                                        <iframe src="${sFullPath}" frameborder="0" height="650" style="width: 100%;" class='mt-2'></iframe>
+                                    </div>
+                                </div>
+                                `;
+                idCnt++;
             }
 
-            var sMessage = "";
+            if (invalidCnt > 0) {
+                _systemAlert(
+                    "alert",
+                    "Please be advised, this system can only accept PDF formatted file with up to 25MB max size."
+                );
 
-            if (sInvalid != "") {
-                sMessage +=
-                    "<b>File/s Invalid Format:</b> <br />" +
-                    sInvalid +
-                    "<br /><br />";
-            }
-
-            if (sTooLarge != "") {
-                sMessage +=
-                    "<b>File/s Too Large:</b> <br />" +
-                    sTooLarge +
-                    "<br /><br />";
-            }
-
-            sMessage +=
-                "Please be advised, this system can only accept PDF formatted file with up to 25MB max size.";
-
-            if (sTooLarge != "" || sInvalid != "" || sWrongCamp != "") {
-                $(this).val("");
-                _systemAlert("alert", sMessage);
+                $(".card-footer").removeClass("d-none").addClass("d-none");
+                $("#file-to-upload")
+                    .closest("div.row")
+                    .removeClass("d-none")
+                    .addClass("d-none");
+                $(".file-drop-area").closest("div.row").removeClass("d-none");
             } else {
-                $("#file-to-upload").attr("src", sFullPath);
+                $("#file-to-upload").html(iframes);
 
                 $(".card-footer").removeClass("d-none");
                 $("#file-to-upload").closest("div.row").removeClass("d-none");
@@ -78,10 +82,18 @@ $(document).ready(function () {
     $("#btn-upload").on("click", function (e) {
         e.preventDefault();
         let parentForm = $(this).closest("form");
-        let chosen_file = $($(".file-input"))[0].files[0];
+        let chosen_files = $($(".file-input"))[0].files;
 
         let form_data = new FormData();
-        form_data.append("Document", chosen_file);
+
+        for (let x = 0; x < chosen_files.length; x++) {
+            let chosen_file = chosen_files[x];
+            let req_type = $("#sel-req-type-" + x).val();
+
+            console.log(req_type);
+            form_data.append("Types[]", req_type);
+            form_data.append("Documents[]", chosen_file);
+        }
 
         ajaxSubmit("/execute/document/upload", form_data, $(this));
     });
@@ -98,3 +110,20 @@ $(document).ready(function () {
         $("#file-to-view").attr("src", link);
     });
 });
+
+function dropReqTypes(elem_id) {
+    let req_types = $("#txtReqTypes").val().split("||");
+    let dropdown = `
+        <select class="form-control" id="${elem_id}">
+            <option value="">Select Requirement Type</option>
+    `;
+
+    for (const req_type of req_types) {
+        let types = req_type.split("|");
+
+        dropdown += `<option value="${types[0]}">${types[1]}</option>`;
+    }
+    dropdown += `</select>`;
+
+    return dropdown;
+}
