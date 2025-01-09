@@ -144,8 +144,21 @@ class GlobalHelper {
     public function getApplicantDocuments(int $user_id): array {
         
         try {
-            $documents = Document::where('user_id', $user_id)->get(); 
-            return $documents->toArray();
+            $requirements = [];
+
+            $documents = Document::where('user_id', $user_id)
+            ->with('requirements')
+            ->get();
+            
+            foreach($documents->toArray() as $document) {
+                $requirement_id = $document['requirements']['id'];
+
+                unset($document['requirements']);
+                
+                $requirements[$requirement_id][] = $document;
+            }
+
+            return $requirements;
 
         } catch(Exception $e) {
             

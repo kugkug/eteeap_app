@@ -74,6 +74,8 @@
     </div>
 </div>
 
+
+
 <div class="modal fade" id="modal-documents" aria-modal="true" role="dialog">
 	<div class="modal-dialog modal-xl">
 		<div class="modal-content">
@@ -89,23 +91,43 @@
 			<div class="modal-body">
 				<div class="row">
 					<div class="col-md-4">
-						<ul class="nav flex-column">
-							
-							@if (count($documents) > 0) 
-								@foreach ($documents as $document)
-								<li class="nav-item">
-									<a href="#" data-link={{ asset('documents/' . $document['filename']) }} class="nav-link">
-									  {{ $document['original_filename']}}
-									</a>
-								  </li>	
-								@endforeach
-							@endif
-						  </ul>
+					  <div class="nav flex-column nav-tabs h-100" role="tablist" aria-orientation="vertical">
+				
+						@foreach ($req_types as $req_type)
+							<a class="nav-link" data-toggle="pill"
+								href="#req-tab-{{$req_type['id']}}" 
+								role="tab" 
+								aria-controls="req-tab-{{$req_type['id']}}" 
+								aria-selected="false"
+							>
+								{{ $req_type['title']}}	
+							</a>	
+						@endforeach
+					  </div>
 					</div>
 					<div class="col-md-8">
-						<iframe src="" frameborder="0" id="file-to-view"></iframe>
+					  <div class="tab-content">
+						@if (count($documents) > 0) 
+							@foreach ($req_types as $req_type)
+								@if(isset($documents[$req_type['id']]))
+				
+									<div class="tab-pane text-left fade" id="req-tab-{{$req_type['id']}}" role="tabpanel" aria-labelledby="req-tab-{{$req_type['id']}}-tab">
+										
+										@foreach ($documents[$req_type['id']] as $document)
+											<iframe src="{{ asset('documents/' . $document['filename'] ) }}" frameborder="0" id="file-to-view"></iframe>
+											<hr />
+										@endforeach
+									 </div>
+								@else
+								<div class="tab-pane text-left fade" id="req-tab-{{$req_type['id']}}" role="tabpanel" aria-labelledby="req-tab-{{$req_type['id']}}-tab">
+									No document found!
+								 </div>
+								@endif
+							@endforeach
+						@endif
+					  </div>
 					</div>
-				</div>
+				  </div>
 			</div>
 		</div>
 	</div>

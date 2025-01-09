@@ -46,9 +46,9 @@ class ModulesController extends Controller {
 
     public function documents(Request $request) {
         
-        
         $this->data['req_types'] = globalHelper()->getRequirementTypes();
         $this->data['documents'] = globalHelper()->getApplicantDocuments(Auth::id());
+        
         $this->data['title'] = "Documents";
         return globalHelper()->makeView('pages.applicant.documents', $this->data, $request)->with([
             'current_user' => $request->current_user,

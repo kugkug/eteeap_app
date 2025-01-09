@@ -132,6 +132,11 @@ h2 {
     transition: 0.2s;
 }
 
+#modal-documents .modal-body {
+    max-height: 80vh;
+    overflow: auto;
+}
+
 hr {
     border: none;
     height: 1px;
