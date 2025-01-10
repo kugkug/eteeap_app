@@ -42,6 +42,7 @@ class UserController extends Controller
             $firstname = $user_data['firstname'];
             $otp = globalHelper()->genOtp();
 
+            $user_data['access_type'] = 1;
             User::create($user_data);
             Otp::updateOrCreate( ['identity' => $email], ['otp' => $otp] );
 
@@ -55,6 +56,7 @@ class UserController extends Controller
 
             return [
                 'status' => 'ok',
+                'email' => base64_encode($email),
             ];
             
         } catch(GlobalException $ge) {
@@ -192,6 +194,7 @@ class UserController extends Controller
                 'status' => 'ok',
                 'info' => [
                     'user_id' => Auth::id(),
+                    'user_type' => $user->access_type,
                     'access_token' => $user->createToken('api_token')->plainTextToken,
                     'token_type' => 'Bearer',
                 ],

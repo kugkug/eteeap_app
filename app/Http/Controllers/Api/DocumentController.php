@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Exceptions\GlobalException;
 use App\Http\Controllers\Controller;
 use App\Models\Document;
+use Carbon\Carbon;
 use Exception;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
@@ -35,6 +36,7 @@ class DocumentController extends Controller
                     'requirement_id' => $type,
                     'original_filename' => $orig,
                     'filename' => $filename,
+                    'created_at' => Carbon::now()->format("Y-m-d H:i:s")
                 ];
 
                 $x++;

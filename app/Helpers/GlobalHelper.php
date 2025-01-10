@@ -7,6 +7,7 @@ use App\Mail\EteeapMailer;
 use App\Models\Document;
 use App\Models\Otp;
 use App\Models\Requirement;
+use App\Models\User;
 use Carbon\Carbon;
 use Exception;
 use Illuminate\Http\JsonResponse;
@@ -177,5 +178,17 @@ class GlobalHelper {
             Log::channel('info')->info("Exception : ".$e->getMessage());
             return [];
         }   
+    }
+
+    public function getApplicantInformation(int $id) {
+        try {
+            $user = User::find( $id)->get();
+            return $user->toArray()[0];
+
+        } catch(Exception $e) {
+            
+            Log::channel('info')->info("Exception : ".$e->getMessage());
+            return [];
+        }  
     }
 }

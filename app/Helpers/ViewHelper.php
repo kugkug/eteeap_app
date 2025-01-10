@@ -119,7 +119,7 @@ class ViewHelper {
         ];
     }   
 
-    public function createAccountsTable(array $data): mixed {
+    public function createApplicantsTable(array $data): mixed {
 
         $fetched_data = $data['list'];
         $current = $fetched_data['current_page'];
@@ -136,40 +136,25 @@ class ViewHelper {
         $table .="<thead>
                     <tr>
                         <th> Fullname </th>
-                        <th> Company </th>
-                        <th> Username </th>
-                        <th> Access Level </th>
+                        <th> Email </th>
+                        <th> Contact </th>
                         <th> Action </th>
                     </tr>
                 </thead>";
         if (count($data) > 0) {
             foreach($data as $account) {
+
+
                 $actions = "
-                    
-                        <button type='button' class='btn btn-warning dropdown-toggle dropdown-icon btn-sm' data-toggle='dropdown' aria-expanded='false'>
-                            <span class='sr-only'>Toggle Dropdown</span>
-                        </button>
-                        <div class='dropdown-menu' role='menu'>
-                            <a class='dropdown-item text-green' href='/account/edit/".$account['id']."'>
-                                <i class='fa fa-edit'></i> Edit
-                            </a>
-                            <div class='dropdown-divider'></div>
-                            <a class='dropdown-item text-primary' href='#' data-reset=".$account['id']."'>
-                                <i class='fa fa-edit'></i> Reset Password
-                            </a>
-                            <div class='dropdown-divider'></div>
-                            <a class='dropdown-item text-danger' href='#' data-delete='".$account['id']."'>
-                                <i class='fa fa-ban'></i> Deactivate
-                            </a>
-                        </div>
-                    
-                ";
+                            <a class='btn btn-success btn-sm' href='/process/applicant/".$account['id']."'>
+                                 <i class='fa fa-user-edit'></i> Process
+                             </a>";
 
                 $table .= "<tr>
                         <td>".join(" ", [$account['firstname'], $account['lastname']])."</td>
-                        <td>".($account['company']['name'] ?? '')."</td>
-                        <td>".$account['username']."</td>
-                        <td>".config('custom.user_type')[$account['user_type']]."</td>
+                        
+                        <td>".$account['email']."</td>
+                        <td>".$account['phone']."</td>
                         <td>".$actions."</td>
                     </tr>";
             }

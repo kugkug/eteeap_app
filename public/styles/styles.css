@@ -144,3 +144,12 @@ hr {
     color: #333; /* old IE */
     background-color: #333; /* Modern Browsers */
 }
+
+textarea {
+    resize: none;
+}
+
+.div-document-tab {
+    max-height: 70vh;
+    overflow: auto;
+}

@@ -17,12 +17,10 @@ class IsAdminWeb
      */
     public function handle(Request $request, Closure $next): Response
     {
-        $user_type = Auth::user()->user_type;
-        $user_settings = UserSettings::where('id', Auth::id())->get();
-        $current_setting = (!$user_settings->isEmpty()) ? $user_settings->toArray()[0] : [];
-        $request->merge(['current_user' => Auth::user(), 'current_user_settings' => $current_setting]);
+        $user_type = Auth::user()->access_type;
+        $request->merge(['current_user' => Auth::user()]);
 
-        if (config('custom.user_type')[$user_type] !== "Admin") {
+        if (config('users.admin') !== $user_type) {
             return response(view('components.errors.unauthorize'));
         }
         return $next($request);

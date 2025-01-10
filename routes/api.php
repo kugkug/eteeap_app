@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\ApplicationController;
 use App\Http\Controllers\Api\DocumentController;
 use App\Http\Controllers\Api\UserController;
 use Illuminate\Http\Request;
@@ -23,5 +24,10 @@ Route::middleware(['auth:sanctum', 'current_user'])->group(function() {
 
     Route::group(['prefix' => 'document'], function() {
         Route::post('/upload', [DocumentController::class, 'upload'])->name('api_upload_document');
+    });
+
+    Route::group(['prefix' => 'applications'], function() {
+        Route::post('/list', [ApplicationController::class, 'list'])->name('api_application_list');
+        Route::post('/process', [ApplicationController::class, 'process'])->name('api_application_list');
     });
 });
