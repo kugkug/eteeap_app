@@ -150,7 +150,7 @@ class GlobalHelper {
             $documents = Document::where('user_id', $user_id)
             ->with('requirements')
             ->get();
-            
+
             foreach($documents->toArray() as $document) {
                 $requirement_id = $document['requirements']['id'];
 
@@ -182,7 +182,8 @@ class GlobalHelper {
 
     public function getApplicantInformation(int $id) {
         try {
-            $user = User::find( $id)->get();
+            $user = User::where('id', $id)->get();
+            
             return $user->toArray()[0];
 
         } catch(Exception $e) {

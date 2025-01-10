@@ -24,6 +24,7 @@ Route::middleware(['auth:sanctum', 'current_user'])->group(function() {
 
     Route::group(['prefix' => 'document'], function() {
         Route::post('/upload', [DocumentController::class, 'upload'])->name('api_upload_document');
+        Route::post('/remove', [DocumentController::class, 'remove'])->name('api_remove_document');
     });
 
     Route::group(['prefix' => 'applications'], function() {

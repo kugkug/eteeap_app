@@ -35,6 +35,7 @@ Route::middleware(['auth:sanctum', 'current_user'])->group(function() {
 
         Route::group(['prefix' => 'document'], function() {
             Route::post('/upload', [ExecDocumentController::class, 'upload'])->name('exec_upload_document');
+            Route::post('/remove', [ExecDocumentController::class, 'remove'])->name('exec_remove_document');
         });
     });
 });

@@ -114,8 +114,38 @@
 									<div class="tab-pane text-left fade" id="req-tab-{{$req_type['id']}}" role="tabpanel" aria-labelledby="req-tab-{{$req_type['id']}}-tab">
 										
 										@foreach ($documents[$req_type['id']] as $document)
-											<iframe src="{{ asset('documents/' . $document['filename'] ) }}" frameborder="0" id="file-to-view"></iframe>
-											<hr />
+
+										<?php
+											if ($document['status'] == 1) {
+												$card = "card-outline card-success";
+											} elseif ($document['status'] == 2) {
+												$card = "card-outline card-danger";
+											} else {
+												$card = "card-outline card-warning";
+											}
+										
+										?>
+
+										<div class="card m-2 {{ $card }}" id="card-doc-{{$document['id']}}">
+                                            <div class="card-header">
+                                                <h3 class="card-title">
+                                                {{ $document['original_filename'] }}
+                                                </h3>
+												<div class="card-tools">
+													<button type="button" class="btn btn-sm btn-danger" data-trigger="remove" data-id="{{$document['id']}}">
+													<i class="fa fa-trash"></i>
+															Remove
+													</button>
+												</div>
+                                            </div>
+                                            <div class="card-body">
+
+												<iframe src="{{ asset('documents/' . $document['filename'] ) }}" frameborder="0" id="file-to-view"></iframe>
+												<div class="col-md-12 mt-4">
+                                                    <textarea class="form-control" rows="5" placeholder="Note:" readonly>{{ $document['notes']}}</textarea>
+                                                </div>
+                                            </div>
+										</div>
 										@endforeach
 									 </div>
 								@else

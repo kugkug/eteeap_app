@@ -1,6 +1,16 @@
 $(document).ready(function () {
     let file = $("[type=file]");
 
+    $("[data-trigger]").on("click", function () {
+        let trigger = $(this).attr("data-trigger");
+        let id = $(this).attr("data-id");
+
+        ajaxRequest("/execute/document/remove", {
+            action: trigger,
+            id: id,
+        });
+    });
+
     if (file.length) {
         $(file).off();
         $(file).click();

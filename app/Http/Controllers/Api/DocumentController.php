@@ -57,4 +57,23 @@ class DocumentController extends Controller
             throw new GlobalException();
         }
     }
+
+    public function remove(Request $request) {
+        try {
+ 
+            Document::where('id', $request->id)->delete();
+            
+            return [
+                'status' => 'ok',
+                'message' => "$('#card-doc-".$request->id."').fadeOut();",
+            ];
+
+        } catch(GlobalException $ge) {
+            Log::channel('info')->info("Global : ".$ge->getMessage());
+            throw new GlobalException($ge->getMessage());
+        } catch (Exception $e) {
+            Log::channel('info')->info("Exception : ".$e->getMessage());
+            throw new GlobalException();
+        }
+    }
 }
