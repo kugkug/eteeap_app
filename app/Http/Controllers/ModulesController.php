@@ -10,7 +10,8 @@ class ModulesController extends Controller {
     public $data = [];
 
     public function __construct() {
-        $this->data['profile'] = globalHelper()->getApplicantProfile(Auth::id());
+        $id = Auth::id() ?? 0;
+        $this->data['profile'] = globalHelper()->getApplicantProfile();
     }
 
     public function login() {
