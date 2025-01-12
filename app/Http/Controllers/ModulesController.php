@@ -9,11 +9,6 @@ class ModulesController extends Controller {
 
     public $data = [];
 
-    public function __construct() {
-        $id = Auth::id() ?? 0;
-        $this->data['profile'] = globalHelper()->getApplicantProfile();
-    }
-
     public function login() {
         return view('pages.login');
     }
@@ -35,13 +30,14 @@ class ModulesController extends Controller {
 
     public function dashboard(Request $request) {
         
+        $this->data['profile'] = globalHelper()->getApplicantProfile(Auth::id());
         return globalHelper()->makeView('pages.applicant.dashboard', $this->data, $request)->with([
             'current_user' => $request->current_user,
         ]);
     }
 
     public function information(Request $request) {
-                
+        $this->data['profile'] = globalHelper()->getApplicantProfile(Auth::id());
         return globalHelper()->makeView('pages.applicant.information', $this->data, $request)->with([
             'current_user' => $request->current_user,
         ]);
@@ -50,6 +46,7 @@ class ModulesController extends Controller {
 
     public function documents(Request $request) {
         
+        $this->data['profile'] = globalHelper()->getApplicantProfile(Auth::id());
         $this->data['req_types'] = globalHelper()->getRequirementTypes();
         $this->data['documents'] = globalHelper()->getApplicantDocuments(Auth::id());
         
@@ -62,6 +59,7 @@ class ModulesController extends Controller {
 
     public function education(Request $request) {
         
+        $this->data['profile'] = globalHelper()->getApplicantProfile(Auth::id());
         return globalHelper()->makeView('pages.applicant.education', $this->data, $request)->with([
             'current_user' => $request->current_user,
         ]);
@@ -70,6 +68,7 @@ class ModulesController extends Controller {
 
     public function experience(Request $request) {
         
+        $this->data['profile'] = globalHelper()->getApplicantProfile(Auth::id());
         return globalHelper()->makeView('pages.applicant.experience', $this->data, $request)->with([
             'current_user' => $request->current_user,
         ]);
@@ -78,6 +77,7 @@ class ModulesController extends Controller {
 
     public function timeline(Request $request) {
         
+        $this->data['profile'] = globalHelper()->getApplicantProfile(Auth::id());
         $this->data['timelines'] = globalHelper()->getTimeline(Auth::id(), Auth::id());
 
         return globalHelper()->makeView('pages.applicant.timeline', $this->data, $request)->with([
@@ -87,7 +87,7 @@ class ModulesController extends Controller {
     }
 
     public function messages(Request $request) {
-        
+        $this->data['profile'] = globalHelper()->getApplicantProfile(Auth::id());
         return globalHelper()->makeView('pages.applicant.messages', $this->data, $request)->with([
             'current_user' => $request->current_user,
         ]);
