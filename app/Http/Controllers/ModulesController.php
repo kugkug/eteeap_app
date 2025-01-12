@@ -74,7 +74,9 @@ class ModulesController extends Controller {
 
     public function timeline(Request $request) {
         
-        return globalHelper()->makeView('pages.applicant.timeline', [], $request)->with([
+        $this->data['timelines'] = globalHelper()->getTimeline(Auth::id(), Auth::id());
+
+        return globalHelper()->makeView('pages.applicant.timeline', $this->data, $request)->with([
             'current_user' => $request->current_user,
         ]);
 

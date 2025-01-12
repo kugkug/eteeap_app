@@ -7,6 +7,7 @@ use App\Mail\EteeapMailer;
 use App\Models\Document;
 use App\Models\Otp;
 use App\Models\Requirement;
+use App\Models\Timeline;
 use App\Models\User;
 use Carbon\Carbon;
 use Exception;
@@ -14,6 +15,7 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\View\View;
@@ -168,6 +170,20 @@ class GlobalHelper {
         }       
     }
 
+    public function getDocument(int $document_id): array {
+        try {
+            
+            $documents = Document::where('id', $document_id)->get();
+            
+            return $documents->toArray()[0];
+
+        } catch(Exception $e) {
+            
+            Log::channel('info')->info("Exception : ".$e->getMessage());
+            return [];
+        }       
+    }
+
     public function getRequirementTypes(): array {
         try {
             $req_types = Requirement::get();
@@ -184,6 +200,7 @@ class GlobalHelper {
         try {
             $user = User::where('id', $id)->get();
             
+            
             return $user->toArray()[0];
 
         } catch(Exception $e) {
@@ -191,5 +208,41 @@ class GlobalHelper {
             Log::channel('info')->info("Exception : ".$e->getMessage());
             return [];
         }  
+    }
+
+    public function getTimeline(int $sender_id, int $recipient_id): array {
+        try {
+            $arr_timelines = [];
+            $timelines = Timeline::where('sender_id', $sender_id)
+            ->orWhere('recipient_id', $recipient_id)
+            ->orderBy('created_at', 'desc')
+            ->with('sender')
+            ->with('recipient')
+            ->get();
+            
+            foreach($timelines->toArray() as $timeline) {
+                $date = Carbon::parse($timeline['created_at'])->format('Y-m-d');
+                $arr_timelines[$date][] = $timeline;
+            }
+            
+            return $arr_timelines;
+
+        } catch(Exception $e) {
+            
+            Log::channel('info')->info("Exception : ".$e->getMessage());
+            return [];
+        }  
+    }
+
+    public function logTimeline(int $recipient, string $action, string $description, string $assets= ''): void {
+        $sender = Auth::id();
+
+        Timeline::create([
+            'sender_id' => $sender,
+            'recipient_id' => $recipient,
+            'action' => $action,
+            'description' => $description,
+        ]);
+        return;
     }
 }

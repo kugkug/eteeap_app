@@ -32,6 +32,8 @@ class ApplicationController extends Controller
         if ($request->action == "approve") {
             $status = 1;
             $message = "_systemAlert('info', 'File Approved')";
+
+            
         } else {
             $status = 2;
             $message = "_systemAlert('alert', 'Revision Requested')";
@@ -43,6 +45,13 @@ class ApplicationController extends Controller
         ];
 
         Document::find($request->id)->update($data);
+
+        $document = globalHelper()->getDocument($request->id);
+        
+        globalHelper()->logTimeline($document['user_id'], $request->action, 
+            $document['original_filename']."<br />".$request->notes
+        );
+        
         try {
             
             return [

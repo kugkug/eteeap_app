@@ -21,6 +21,7 @@ class DocumentController extends Controller
             $req_types = $request->Types;
             $document_data = [];
             $x = 0;
+            $origs = [];
             
             foreach($files as $file) {
                 $type = $req_types[$x];
@@ -39,10 +40,15 @@ class DocumentController extends Controller
                     'created_at' => Carbon::now()->format("Y-m-d H:i:s")
                 ];
 
+                $origs[] = $orig;
+
                 $x++;
             }
 
             Document::insert($document_data);
+            $files = join("<br />", $origs);
+            
+            globalHelper()->logTimeline(0, 'upload', $files);
 
             return [
                 'status' => 'ok',
