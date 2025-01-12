@@ -211,7 +211,7 @@ class GlobalHelper {
         }  
     }
 
-    public function getApplicantProfile(int $id) {
+    public function getApplicantProfile(int $id=0) {
         try {
             $profile = Profile::where('user_id', $id)->get();
         
