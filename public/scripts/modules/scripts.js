@@ -231,6 +231,9 @@ function _confirm(type, content) {
             confirm: {
                 text: "Ok",
                 btnClass: "btn btn-primary",
+                action: function () {
+                    location.reload;
+                },
                 // action: function () {
                 //     _conTinue(sAction, sJsonData);
                 // },
