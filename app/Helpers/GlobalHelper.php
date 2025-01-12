@@ -225,7 +225,7 @@ class GlobalHelper {
                 'position' => '',
                 'company' => '',
                 'company_address' => '',
-                'skill' => '',
+                'skills' => '',
             ];
         }  
     }
