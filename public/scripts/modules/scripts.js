@@ -232,7 +232,7 @@ function _confirm(type, content) {
                 text: "Ok",
                 btnClass: "btn btn-primary",
                 action: function () {
-                    location.reload;
+                    location.reload();
                 },
                 // action: function () {
                 //     _conTinue(sAction, sJsonData);
