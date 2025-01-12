@@ -44,9 +44,13 @@
       <strong><i class="fas fa-pencil-alt mr-1"></i> Skills</strong>
 
       <p class="text-muted">
+        @if ($profile['skills'] != "")
+          
+        
         @foreach (explode(",", $profile['skills']) as $skill)
         <span class="tag tag-danger">{{$skill}}</span>
         @endforeach
+        @endif
       </p>
 
       <hr>
