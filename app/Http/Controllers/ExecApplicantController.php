@@ -26,6 +26,22 @@ class ExecApplicantController extends Controller
         } 
     }
 
+    public function profile_update(Request $request) {
+        try {
+            
+            $response = apiHelper()->execute($request, '/api/profile/update', 'POST');
+            
+            if ($response['status'] == "error") {
+                return globalHelper()->ajaxErrorResponse($response['message']);
+            } else {
+                return globalHelper()->ajaxSuccessResponse($response['message']);
+            }
+        } catch (Exception $e) {
+            Log::channel('info')->info($e->getMessage());
+            return globalHelper()->ajaxErrorResponse('');
+        } 
+    }
+
     public function login(Request $request) {
         try {
             $response = apiHelper()->execute($request, '/api/login', 'POST');

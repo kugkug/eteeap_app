@@ -105,20 +105,13 @@ class ValidatorHelper {
                 ];
             break;
 
-            case 'players_update':
+            case 'profile_update':
                 return [
-                    'firstname' => "sometimes|string|max:255",
-                    'middlename' => "sometimes|string|max:255",
-                    'lastname' => "sometimes|string|max:255",
-                    'nationality_id' => "sometimes|integer|max:6",
-                    'arrival_date' => "sometimes|string|max:255",
-                    'photo' => "sometimes|string|max:255",
-                    'deposit' => "sometimes|string|max:255",
-                    'checkout' => "sometimes|string|max:255",
-                    'status' => "sometimes|integer|max:6",
-                    'availment_id' => "sometimes|integer|max:6",
-                    'checked_in_by' => "sometimes|string|max:255",
-                    'checked_out_by' => "sometimes|string|max:255",
+                    'address' => "required|string",
+                    'position' => "required|string|max:255",
+                    'company' => "required|string|max:255",
+                    'company_address' => "required|string",
+                    'skills' => "sometimes|string",
                 ];
             break;
 

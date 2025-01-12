@@ -17,8 +17,6 @@ Route::get('/', [ModulesController::class, 'login'])->name('login');
 Route::get('/registration', [ModulesController::class, 'registration'])->name('registration');
 Route::get('/verify-email', [ModulesController::class, 'verify_email'])->name('verify_email');
 
-
-
 Route::middleware(['auth:sanctum', 'current_user'])->group(function() {
     Route::get('/dashboard', [ModulesController::class, 'dashboard'])->name('dashboard');
     Route::get('/uploads', [ModulesController::class, 'documents'])->name('documents');
@@ -31,6 +29,7 @@ Route::middleware(['auth:sanctum', 'current_user'])->group(function() {
     Route::group(['prefix' => 'execute'], function() {
         Route::group(['prefix' => 'applicants'], function() {
             Route::get('logout', [ExecApplicantController::class, 'logout'])->name('web_execute_logout');
+            Route::post('profile_update', [ExecApplicantController::class, 'profile_update'])->name('profile_update');
         });
 
         Route::group(['prefix' => 'document'], function() {

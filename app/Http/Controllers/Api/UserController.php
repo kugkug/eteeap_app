@@ -6,6 +6,7 @@ use App\Exceptions\GlobalException;
 use App\Http\Controllers\Controller;
 use App\Mail\EteeapMailer;
 use App\Models\Otp;
+use App\Models\Profile;
 use App\Models\User;
 use Exception;
 use Illuminate\Database\QueryException;
@@ -164,6 +165,33 @@ class UserController extends Controller
             throw new GlobalException($ge->getMessage());
         }
 
+    }
+
+
+    public function profile_update(Request $request) {
+        
+        try {
+            $validated = validatorHelper()->validate('profile_update', $request);
+            
+            if ($validated['status'] === "error") {
+                return $validated;
+            }
+            
+            Profile::updateOrCreate(['user_id' => Auth::id()], $validated['validated']);
+
+            return [
+                'status' => 'ok',
+                'message' => "_systemAlert('info', 'Profile Updated!')",
+            ];
+            
+        } catch(GlobalException $ge) {
+
+            Log::channel('info')->info("Global : ".$ge->getMessage());
+            throw new GlobalException($ge->getMessage());
+        } catch (Exception $e) {
+            Log::channel('info')->info("Exception : ".$e->getMessage());
+            throw new GlobalException();
+        }
     }
     
     public function login(Request $request) {

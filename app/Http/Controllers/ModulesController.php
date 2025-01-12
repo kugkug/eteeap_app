@@ -9,6 +9,10 @@ class ModulesController extends Controller {
 
     public $data = [];
 
+    public function __construct() {
+        $this->data['profile'] = globalHelper()->getApplicantProfile(Auth::id());
+    }
+
     public function login() {
         return view('pages.login');
     }
@@ -30,15 +34,14 @@ class ModulesController extends Controller {
 
     public function dashboard(Request $request) {
         
-        return globalHelper()->makeView('pages.applicant.dashboard', [], $request)->with([
+        return globalHelper()->makeView('pages.applicant.dashboard', $this->data, $request)->with([
             'current_user' => $request->current_user,
         ]);
     }
 
     public function information(Request $request) {
-        
-        
-        return globalHelper()->makeView('pages.applicant.dashboard', [], $request)->with([
+                
+        return globalHelper()->makeView('pages.applicant.information', $this->data, $request)->with([
             'current_user' => $request->current_user,
         ]);
 
@@ -58,7 +61,7 @@ class ModulesController extends Controller {
 
     public function education(Request $request) {
         
-        return globalHelper()->makeView('pages.applicant.education', [], $request)->with([
+        return globalHelper()->makeView('pages.applicant.education', $this->data, $request)->with([
             'current_user' => $request->current_user,
         ]);
 
@@ -66,7 +69,7 @@ class ModulesController extends Controller {
 
     public function experience(Request $request) {
         
-        return globalHelper()->makeView('pages.applicant.experience', [], $request)->with([
+        return globalHelper()->makeView('pages.applicant.experience', $this->data, $request)->with([
             'current_user' => $request->current_user,
         ]);
 
@@ -84,7 +87,7 @@ class ModulesController extends Controller {
 
     public function messages(Request $request) {
         
-        return globalHelper()->makeView('pages.applicant.messages', [], $request)->with([
+        return globalHelper()->makeView('pages.applicant.messages', $this->data, $request)->with([
             'current_user' => $request->current_user,
         ]);
 

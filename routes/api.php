@@ -31,4 +31,8 @@ Route::middleware(['auth:sanctum', 'current_user'])->group(function() {
         Route::post('/list', [ApplicationController::class, 'list'])->name('api_application_list');
         Route::post('/process', [ApplicationController::class, 'process'])->name('api_application_list');
     });
+
+    Route::group(['prefix' => 'profile'], function() {
+        Route::post('/update', [UserController::class, 'profile_update'])->name('api_profile_update');
+    });
 });

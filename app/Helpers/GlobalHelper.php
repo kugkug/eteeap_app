@@ -6,6 +6,7 @@ namespace App\Helpers;
 use App\Mail\EteeapMailer;
 use App\Models\Document;
 use App\Models\Otp;
+use App\Models\Profile;
 use App\Models\Requirement;
 use App\Models\Timeline;
 use App\Models\User;
@@ -207,6 +208,25 @@ class GlobalHelper {
             
             Log::channel('info')->info("Exception : ".$e->getMessage());
             return [];
+        }  
+    }
+
+    public function getApplicantProfile(int $id) {
+        try {
+            $profile = Profile::where('user_id', $id)->get();
+        
+            return $profile->toArray()[0];
+
+        } catch(Exception $e) {
+            
+            Log::channel('info')->info("Exception : ".$e->getMessage());
+            return [
+                'address' => '',
+                'position' => '',
+                'company' => '',
+                'company_address' => '',
+                'skill' => '',
+            ];
         }  
     }
 
