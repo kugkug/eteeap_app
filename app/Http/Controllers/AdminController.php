@@ -24,6 +24,9 @@ class AdminController extends Controller {
     }
 
     public function process($id, Request $request) {
+        
+        $this->data['timelines'] = globalHelper()->getTimeline($id, $id);
+        $this->data['profile'] = globalHelper()->getApplicantProfile($id);
         $this->data['applicant'] = globalHelper()->getApplicantInformation($id);
         $this->data['req_types'] = globalHelper()->getRequirementTypes();
         $this->data['documents'] = globalHelper()->getApplicantDocuments($id);

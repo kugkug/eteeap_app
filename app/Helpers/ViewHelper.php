@@ -158,6 +158,10 @@ class ViewHelper {
                         <td>".$actions."</td>
                     </tr>";
             }
+        } else {
+            $table .= "<tr>
+                        <td>No applications found!</td>
+                    </tr>";
         }
         
         $table .="</table>";
