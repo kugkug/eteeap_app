@@ -13,7 +13,7 @@
   </footer>
 </div>
 
-
+@include('partials.assets.fullscreenloader')
 </body>
 </html>
 

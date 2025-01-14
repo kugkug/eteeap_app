@@ -33,6 +33,9 @@
                 case 'resend-otp':
                         return "resend_otp";
                     break;
+                case 'invite':
+                        return "send_invite";
+                    break;
                 
                 default: 
                         return "";

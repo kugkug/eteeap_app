@@ -57,7 +57,7 @@
             <img src="{{ asset('images/au_logo.png') }}" alt="Company Logo">
         </div>
         <div class="content">            
-            <p>Hi {{ $data['fname'] }}, </p>
+            <p>Hi {{ ucwords(strtolower($data['fname'])) }}, </p>
             <p>To start exploring and uploading your documents please verify your email with the code below.</p>
             <br />
 

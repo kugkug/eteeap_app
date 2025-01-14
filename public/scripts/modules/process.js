@@ -9,4 +9,17 @@ $(document).ready(function () {
             notes: $($($(this).closest(".card")).find("textarea")[0]).val(),
         });
     });
+
+    $("[data-action]").on("click", function () {
+        let trigger = $(this).attr("data-trigger");
+        let id = $(this).attr("data-id");
+
+        send_invite(id);
+    });
 });
+
+function send_invite(id) {
+    ajaxRequest("/execute/administrator/invite", {
+        applicant_id: id,
+    });
+}

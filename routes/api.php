@@ -29,7 +29,8 @@ Route::middleware(['auth:sanctum', 'current_user'])->group(function() {
 
     Route::group(['prefix' => 'applications'], function() {
         Route::post('/list', [ApplicationController::class, 'list'])->name('api_application_list');
-        Route::post('/process', [ApplicationController::class, 'process'])->name('api_application_list');
+        Route::post('/process', [ApplicationController::class, 'process'])->name('api_application_process');
+        Route::post('/invite', [ApplicationController::class, 'invite'])->name('api_application_invite');
     });
 
     Route::group(['prefix' => 'profile'], function() {

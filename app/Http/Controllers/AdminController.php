@@ -14,8 +14,8 @@ class AdminController extends Controller {
     
 
     public function dashboard(Request $request) {
-        
-        return globalHelper()->makeView('pages.admin.dashboard', [], $request);
+        $this->data['dashboard'] = globalHelper()->getDashboardData();
+        return globalHelper()->makeView('pages.admin.dashboard', $this->data, $request);
     }
 
     public function applications(Request $request) {

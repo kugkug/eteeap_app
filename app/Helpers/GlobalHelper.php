@@ -17,6 +17,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\View\View;
@@ -265,4 +266,26 @@ class GlobalHelper {
         ]);
         return;
     }
+
+    public function getDashboardData() {
+        try {
+            $user_info = DB::table('users')
+                    ->select(DB::raw('count(*) as total'))
+                    ->groupBy('application_status')
+                    ->get();
+            $documents = DB::table('documents')->get();
+
+            return [
+                'applications' => $user_info->toArray(),
+                'documents' => count($documents)
+            ];
+        } catch(Exception $e) {
+            Log::channel('info')->info("Exception : ".$e->getMessage());
+            return [
+                'applications' => [ ['total' => 0], ['total' => 0]],
+                'documents' => 0
+            ];
+        }  
+    }
+        
 }

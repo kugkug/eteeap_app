@@ -63,6 +63,7 @@ Route::group(['prefix' => 'execute'], function() {
 
         Route::get('logout', [AdminExecController::class, 'logout'])->name('web_execute_logout');
         Route::post('process', [AdminExecController::class, 'process'])->name('web_execute_logout');
+        Route::post('invite', [AdminExecController::class, 'invite'])->name('web_invite_logout');
     });
     
 });

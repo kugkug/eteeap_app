@@ -111,7 +111,11 @@
             
         </div>
         <div class="card-footer">
-            
+            <div class="d-flex justify-content-between">
+                <button class="btn btn-success" data-action="invite" data-id="{{ $applicant['id'] }}">
+                    Invite for Interview
+                </button>
+            </div>
         </div>
     </div>
 </div>
