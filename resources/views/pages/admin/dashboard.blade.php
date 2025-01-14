@@ -21,7 +21,7 @@
 		  <!-- small box -->
 		  <div class="small-box bg-success">
 			<div class="inner">
-				<h3>{{$dashboard['applications'][1]->total}}</h3>
+				<h3>{{$dashboard['applications'][1]->total ?? 0}}</h3>
 
 			  <p>Approved Applications</p>
 			</div>
