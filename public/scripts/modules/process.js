@@ -3,11 +3,23 @@ $(document).ready(function () {
         let trigger = $(this).attr("data-trigger");
         let id = $(this).attr("data-id");
 
-        ajaxRequest("/execute/administrator/process", {
-            action: trigger,
-            id: id,
-            notes: $($($(this).closest(".card")).find("textarea")[0]).val(),
-        });
+        switch (trigger) {
+            case "download-zip":
+                ajaxRequest("/execute/administrator/download", {
+                    id: id,
+                });
+                break;
+
+            default:
+                ajaxRequest("/execute/administrator/process", {
+                    action: trigger,
+                    id: id,
+                    notes: $(
+                        $($(this).closest(".card")).find("textarea")[0]
+                    ).val(),
+                });
+                break;
+        }
     });
 
     $("[data-action]").on("click", function () {

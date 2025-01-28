@@ -6,15 +6,17 @@ use App\Exceptions\GlobalException;
 use App\Http\Controllers\Controller;
 use App\Models\Document;
 use App\Models\User;
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
+use ZipArchive;
 
 class ApplicationController extends Controller
 {
     public function list()
     {
         try {
-            $applicants = User::where('access_type', 1)->orderBy('lastname', 'asc')->paginate(1);
+            $applicants = User::where('access_type', 1)->orderBy('lastname', 'asc')->paginate(10);
             
             return [
                 'status' => 'ok',
@@ -31,12 +33,12 @@ class ApplicationController extends Controller
     {
         try {
             if ($request->action == "approve") {
-                $status = 1;
+                $status = config('custom.doc_status')['Approved'];
                 $message = "_systemAlert('info', 'File Approved')";
 
                 
             } else {
-                $status = 2;
+                $status = config('custom.doc_status')['Rejected'];
                 $message = "_systemAlert('alert', 'Revision Requested')";
             }
 
@@ -74,7 +76,7 @@ class ApplicationController extends Controller
 
             globalHelper()->sendEmail('invite', $user_info['email'], ['fname' => $user_info['firstname']]);
 
-            User::where('id', $request->applicant_id)->update(['application_status' => 1]);
+            User::where('id', $request->applicant_id)->update(['application_status' => config('custom.application_status')['Passed']]);
             
             return [
                 'status' => 'ok',
@@ -85,9 +87,56 @@ class ApplicationController extends Controller
             Log::channel('info')->info("Global : ".$ge->getMessage());
             return ['status' => 'error'];
             // throw new GlobalException($ge->getMessage());
-
-            
         }
     }
+
+    public function download(Request $request)
+    {
+        try { 
+            $applicant = globalHelper()->getApplicantInformation($request->id);
+            $documents = globalHelper()->getApplicantDocuments($request->id);
+
+            $zip = new \ZipArchive();
+            $zip_filename = $applicant['firstname']."_".$applicant['lastname']."_documents.zip";
+
+            $create_zip_file = $zip->open(public_path("zips/$zip_filename"), \ZipArchive::CREATE);
+            if ($create_zip_file == true) {
+                foreach($documents as $files) {
+                    foreach($files as $document) {
+                        $value = public_path("documents/").$document['filename'];
+                        $relativeName = basename($value);
+                        $zip->addFile($value, $relativeName);
+                    }
+                }
+
+                $zip->close();
+            }
+
+            $url = url("zips/$zip_filename");
+            
+            $js = " var anchor = document.createElement('a');
+                    anchor.href = '".$url."';
+                    anchor.download = '".$zip_filename."';
+                    document.body.append(anchor);
+                    anchor.click();
+                    setTimeout(function () {
+                        document.body.removeChild(anchor);
+                    }, 1);
+                ";
+                
+            return [
+                'status' => 'ok',
+                'message' => $js,
+            ];
+                
+        } catch(GlobalException $ge) {
+            Log::channel('info')->info("Global : ".$ge->getMessage());
+            return ['status' => 'error'];
+        } catch(Exception $e) {
+            Log::channel('info')->info("Global : ".$e->getMessage());
+            return ['status' => 'error'];
+        }
+    }
+
     
 }

@@ -24,7 +24,7 @@ class AdminController extends Controller {
     }
 
     public function process($id, Request $request) {
-        
+        $this->data['document_statuses'] = config('custom.doc_status');
         $this->data['timelines'] = globalHelper()->getTimeline($id, $id);
         $this->data['profile'] = globalHelper()->getApplicantProfile($id);
         $this->data['applicant'] = globalHelper()->getApplicantInformation($id);

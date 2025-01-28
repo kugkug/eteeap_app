@@ -74,8 +74,6 @@
     </div>
 </div>
 
-
-
 <div class="modal fade" id="modal-documents" aria-modal="true" role="dialog">
 	<div class="modal-dialog modal-xl">
 		<div class="modal-content">

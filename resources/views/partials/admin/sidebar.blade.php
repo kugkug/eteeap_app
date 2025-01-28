@@ -31,32 +31,14 @@
               </p>
             </a>
           </li>
-
-          {{-- <li class="nav-item">
-            <a href="/admin/companies" class="nav-link">
-                <i class="nav-icon fas fa-building"></i>
+          <li class="nav-item">
+            <a href="/administrator/bacth-invitation" class="nav-link">
+              <i class="nav-icon fas fa-mail-bulk"></i>
               <p>
-                Companies
+                Batch Invitation
               </p>
             </a>
           </li>
-
-          <li class="nav-item">
-            <a href="/admin/accounts" class="nav-link">
-                <i class="nav-icon fas fa-users"></i>
-              <p>
-                Accounts
-              </p>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a href="/admin/reports" class="nav-link">
-                <i class="nav-icon fas fa-chart-bar"></i>
-              <p>
-                Reports
-              </p>
-            </a>
-          </li> --}}
           <li class="nav-item">
             <a href="/execute/administrator/logout" class="nav-link">
                 <i class="nav-icon fas fa-sign-out-alt"></i>

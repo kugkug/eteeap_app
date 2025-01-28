@@ -19,6 +19,18 @@ return [
         '1' => env('Active', 'Active'),
     ],
 
+    'doc_status' => [
+        'Pending' => 0,
+        'Approved' => 1,
+        'Rejected' => 2,
+    ],
+
+    'application_status' => [
+        'Pending' => 3,
+        'Failed' => 2,
+        'Passed' => 1,
+    ],
+
     'theme_mode' => [
         'light' => 
             [

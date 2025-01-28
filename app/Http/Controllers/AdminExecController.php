@@ -32,7 +32,6 @@ class AdminExecController extends Controller
             } else {
                 return redirect('/');
             }
-            
 
         } catch (Exception $e) {
             Log::channel('info')->info($e->getMessage());
@@ -95,6 +94,25 @@ class AdminExecController extends Controller
     public function invite(Request $request) {
         try {
             $response = apiHelper()->execute($request, '/api/applications/invite', 'POST');
+            if ($response['status'] == "error") {
+                return globalHelper()->ajaxErrorResponse($response['message']);
+            } else {
+                
+                return globalHelper()->ajaxSuccessResponse($response['message']);
+                
+                // $html_view = viewHelper()->createApplicantsTable($response);
+                // return globalHelper()->ajaxSuccessResponse($html_view);
+            }
+        } catch (Exception $e) {
+            Log::channel('info')->info(json_encode($e->getTrace()));
+            return globalHelper()->ajaxErrorResponse('');
+        }
+    }
+
+    public function download(Request $request) {
+        try {
+            $response = apiHelper()->execute($request, '/api/applications/download', 'POST');
+            
             if ($response['status'] == "error") {
                 return globalHelper()->ajaxErrorResponse($response['message']);
             } else {
