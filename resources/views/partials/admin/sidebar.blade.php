@@ -32,7 +32,7 @@
             </a>
           </li>
           <li class="nav-item">
-            <a href="/administrator/bacth-invitation" class="nav-link">
+            <a href="/administrator/batch-invitation" class="nav-link">
               <i class="nav-icon fas fa-mail-bulk"></i>
               <p>
                 Batch Invitation

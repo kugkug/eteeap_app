@@ -28,6 +28,14 @@ $(document).ready(function () {
 
         send_invite(id);
     });
+
+    $("[data-key=doc-status]").on("change", function () {
+        let status = $(this).val();
+
+        $(".Pending, .Rejected, .Approved").hide();
+        if (status != "all") $("." + status).show();
+        else $(".Pending, .Rejected, .Approved").show();
+    });
 });
 
 function send_invite(id) {
