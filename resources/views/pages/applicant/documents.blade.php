@@ -74,6 +74,7 @@
     </div>
 </div>
 
+
 <div class="modal fade" id="modal-documents" aria-modal="true" role="dialog">
 	<div class="modal-dialog modal-xl">
 		<div class="modal-content">
@@ -82,17 +83,53 @@
 					<i class="fa fa-briefcase"></i>
 					Documents
 				</h5>
+				<select data-key="doc-status" class="form-control w-25 ml-5" >
+					<option value="all">All</option>
+					@foreach ($document_statuses as $status => $doc_status)
+						<option value="{{$status}}">{{$status}}</option>
+					@endforeach
+				</select>
+				
 				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 					<span aria-hidden="true">×</span>
-				  </button>
+					</button>
+			
+				
 			</div>
 			<div class="modal-body">
 				<div class="row">
 					<div class="col-md-4">
 					  <div class="nav flex-column nav-tabs h-100" role="tablist" aria-orientation="vertical">
 				
+						@php
+							$status_array = [];    
+							$statuses = "";
+						@endphp
+
 						@foreach ($req_types as $req_type)
-							<a class="nav-link" data-toggle="pill"
+
+							@if(isset($documents[$req_type['id']]))
+
+								@foreach ($documents[$req_type['id']] as $document)
+									@if(count($document) > 0)
+										@php
+											$status_array[] = array_search($document['status'], $document_statuses);
+										@endphp
+									@else
+										@php
+											$status_array[] = array_search(0, $document_statuses);
+										@endphp
+									@endif
+								@endforeach
+							@endif
+							
+							@if (count($status_array) > 0)
+								@php
+									$statuses = join(" ", array_unique($status_array));
+								@endphp                                    
+							@endif
+
+							<a class="nav-link {{$statuses}}" data-toggle="pill"
 								href="#req-tab-{{$req_type['id']}}" 
 								role="tab" 
 								aria-controls="req-tab-{{$req_type['id']}}" 
@@ -121,10 +158,11 @@
 											} else {
 												$card = "card-outline card-warning";
 											}
-										
+
+											$doc_status = array_search($document['status'], $document_statuses);
 										?>
 
-										<div class="card m-2 {{ $card }}" id="card-doc-{{$document['id']}}">
+										<div class="card m-2 {{ $card }} {{ $doc_status }}"  id="card-doc-{{$document['id']}}">
                                             <div class="card-header">
                                                 <h3 class="card-title">
                                                 {{ $document['original_filename'] }}

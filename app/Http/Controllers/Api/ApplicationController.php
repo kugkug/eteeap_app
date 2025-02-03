@@ -13,11 +13,52 @@ use ZipArchive;
 
 class ApplicationController extends Controller
 {
-    public function list()
+    public function list(Request $request)
     {
         try {
-            $applicants = User::where('access_type', 1)->orderBy('lastname', 'asc')->paginate(10);
+            if ($request->course != "") {
+                $applicants = User::where('users.access_type', 1)
+                ->where('profiles.desired_course', $request->course)
+                ->leftJoin('profiles', 'users.id', '=', 'profiles.user_id')
+                ->with('profiles')
+                ->orderBy('users.lastname', 'asc')
+                ->paginate(10, ['users.*', 'profiles.*', 'users.id as user_id', 'profiles.id as profile_id', 'profiles.user_id as user_profile_id']);
+            } else {
+                $applicants = User::where('access_type', 1)
+                ->leftJoin('profiles', 'users.id', '=', 'profiles.user_id')
+                ->orderBy('lastname', 'asc')
+                ->paginate(10, ['users.*', 'profiles.*', 'users.id as user_id', 'profiles.id as profile_id', 'profiles.user_id as user_profile_id']);
+            }
             
+            
+            return [
+                'status' => 'ok',
+                'list' => $applicants
+            ];
+                
+        } catch(GlobalException $ge) {
+            Log::channel('info')->info("Global : ".$ge->getMessage());
+            throw new GlobalException($ge->getMessage());
+        }
+    }
+
+    public function batch_list(Request $request)
+    {
+        try {
+            if ($request->course != "") {
+                $applicants = User::where('users.access_type', 1)
+                ->where('profiles.desired_course', $request->course)
+                ->leftJoin('profiles', 'users.id', '=', 'profiles.user_id')
+                ->with('profiles')
+                ->orderBy('users.lastname', 'asc')
+                ->get(['users.*', 'profiles.*', 'users.id as user_id', 'profiles.id as profile_id', 'profiles.user_id as user_profile_id']);
+            } else {
+                $applicants = User::where('access_type', 1)
+                ->leftJoin('profiles', 'users.id', '=', 'profiles.user_id')
+                ->orderBy('lastname', 'asc')
+                ->get(['users.*', 'profiles.*', 'users.id as user_id', 'profiles.id as profile_id', 'profiles.user_id as user_profile_id']);
+            }
+
             return [
                 'status' => 'ok',
                 'list' => $applicants
@@ -54,9 +95,7 @@ class ApplicationController extends Controller
             globalHelper()->logTimeline($document['user_id'], $request->action, 
                 $document['original_filename']."<br />".$request->notes
             );
-        
-        
-            
+                    
             return [
                 'status' => 'ok',
                 'message' => $message

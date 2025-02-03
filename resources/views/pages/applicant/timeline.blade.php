@@ -12,10 +12,10 @@
 					Timeline
 				</h3>
 				<div class="card-tools">
-					<button type="button" class="btn btn-sm" data-toggle="modal" data-target="#modal-documents">
-						<i class="fas fa-calendar-week"></i>
-						Details
-					</button>
+					<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal-documents">
+                        <i class="fas fa-calendar-week"></i>
+                        Details
+                    </button>
 				</div>
 
 			</div>
@@ -26,7 +26,7 @@
 							<h2 class="font-weight-bold">Applicant's Timeline</h2>
 						</div>
 					</div>
-				
+					
 					<div class="row">
 						<div class="col">
 							<div class="timeline-steps aos-init aos-animate" data-aos="fade-up">
@@ -39,21 +39,48 @@
 								</div>
 								<div class="timeline-step">
 									<div class="timeline-content" data-toggle="popover" data-trigger="hover" data-placement="top" title="" data-content="And here's some amazing content. It's very engaging. Right?" data-original-title="2004">
-										<div class="inner-circle"></div>
+										@if(in_array('profile', $timeline))
+											@php
+												$class = "inner-circle-success";
+											@endphp
+										@else
+											@php
+												$class = "inner-circle";
+											@endphp
+										@endif
+										<div class="{{ $class }}"></div>
 										{{-- <p class="h6 mt-3 mb-1">2004</p> --}}
 										<p class="h6 text-muted mb-0 mb-lg-0">Profile Update</p>
 									</div>
 								</div>
 								<div class="timeline-step">
 									<div class="timeline-content" data-toggle="popover" data-trigger="hover" data-placement="top" title="" data-content="And here's some amazing content. It's very engaging. Right?" data-original-title="2005">
-										<div class="inner-circle"></div>
+										@if(in_array('upload', $timeline))
+											@php
+												$class = "inner-circle-success";
+											@endphp
+										@else
+											@php
+												$class = "inner-circle";
+											@endphp
+										@endif
+										<div class="{{ $class }}"></div>
 										{{-- <p class="h6 mt-3 mb-1">2005</p> --}}
 										<p class="h6 text-muted mb-0 mb-lg-0">Documents Upload</p>
 									</div>
 								</div>
 								<div class="timeline-step">
 									<div class="timeline-content" data-toggle="popover" data-trigger="hover" data-placement="top" title="" data-content="And here's some amazing content. It's very engaging. Right?" data-original-title="2010">
-										<div class="inner-circle"></div>
+										@if(in_array('interview', $timeline))
+											@php
+												$class = "inner-circle-success";
+											@endphp
+										@else
+											@php
+												$class = "inner-circle";
+											@endphp
+										@endif
+										<div class="{{ $class }}"></div>
 										{{-- <p class="h6 mt-3 mb-1">2010</p> --}}
 										<p class="h6 text-muted mb-0 mb-lg-0">For Interview</p>
 									</div>

@@ -119,6 +119,14 @@ $(document).ready(function () {
 
         $("#file-to-view").attr("src", link);
     });
+
+    $("[data-key=doc-status]").on("change", function () {
+        let status = $(this).val();
+
+        $(".Pending, .Rejected, .Approved").hide();
+        if (status != "all") $("." + status).show();
+        else $(".Pending, .Rejected, .Approved").show();
+    });
 });
 
 function dropReqTypes(elem_id) {

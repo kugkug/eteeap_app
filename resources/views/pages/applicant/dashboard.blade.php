@@ -21,14 +21,25 @@
 				</div>
 
 				<div class="col-md-3">
-					<a href="uploads">
-						<div class="small-box bg-default box-button">
-							<div class="inner text-center">
-								<i class="fas fa-folder"></i>
-								<p class="mt-3">DOCUMENTS</p>
+					@if(in_array('profile', $timeline))
+						<a href="uploads">
+							<div class="small-box bg-default box-button">
+								<div class="inner text-center">
+									<i class="fas fa-folder"></i>
+									<p class="mt-3">DOCUMENTS</p>
+								</div>
 							</div>
-						</div>
-					</a>
+						</a>
+					@else
+						
+							<div class="small-box bg-default box-button text-muted">
+								<div class="inner text-center">
+									<i class="fas fa-folder"></i>
+									<p class="mt-3">DOCUMENTS</p>
+								</div>
+							</div>
+						
+					@endif
 				</div>
 
 				<div class="col-md-3">

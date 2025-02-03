@@ -13,6 +13,18 @@
 				</div>
 				<div class="card-body">
 					<div class="form-group">
+						<label for="">Desired Course</label>
+						<select data-key="DesiredCourse" class="form-control" >
+							<option value="">Course</option>
+							@foreach ($courses as $course_code => $course_desc)
+								@php
+									$selected =  $profile['desired_course'] == $course_code ? " selected" : "";
+								@endphp
+								<option value="{{$course_code}}" {{$selected}}>{{$course_desc}}</option>
+							@endforeach
+						</select>
+					</div>
+					<div class="form-group">
 						<label for="">Current Address</label>
 						<textarea rows="3" class="form-control" data-key="Address"  data="req">{{ $profile['address']}}</textarea>
 					</div>

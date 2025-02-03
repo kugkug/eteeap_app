@@ -52,6 +52,7 @@ Route::group(['prefix' => 'execute'], function() {
 
     Route::group(['prefix' => 'applications'], function() {
         Route::post('list', [AdminExecController::class, 'list'])->name('agents_list');
+        Route::post('batch-list', [AdminExecController::class, 'batch_list'])->name('batch_list');
     });
 
 
@@ -75,6 +76,7 @@ Route::middleware(['auth:sanctum', 'current_user', 'is_admin_web'])->group(funct
     Route::get('/administrator', [AdminController::class, 'dashboard'])->name('admin-dashboard');
     Route::get('/administrator/applications', [AdminController::class, 'applications'])->name('admin-applications');
     Route::get('/process/applicant/{id}', [AdminController::class, 'process'])->name('admin-process');
+    Route::get('/administrator/batch-invitation', [AdminController::class, 'batch'])->name('batch-invitations');
     // Route::get('/uploads', [ModulesController::class, 'documents'])->name('documents');
     // Route::get('/education', [ModulesController::class, 'education'])->name('education');
     // Route::get('/experience', [ModulesController::class, 'experience'])->name('experience');

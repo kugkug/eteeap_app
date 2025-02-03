@@ -238,3 +238,7 @@ textarea {
     border-radius: 6.25rem;
     opacity: 0.5;
 }
+
+.overflow-auto {
+    height: 520px;
+}

@@ -57,13 +57,28 @@ class AdminExecController extends Controller
     public function list(Request $request) {
         try {
             $response = apiHelper()->execute($request, '/api/applications/list', 'POST');
-
             
             if ($response['status'] == "error") {
                 return globalHelper()->ajaxErrorResponse($response['message']);
             } else {
                 
                 $html_view = viewHelper()->createApplicantsTable($response);
+                return globalHelper()->ajaxSuccessResponse($html_view);
+            }
+        } catch (Exception $e) {
+            Log::channel('info')->info(json_encode($e->getTrace()));
+            return globalHelper()->ajaxErrorResponse('');
+        }
+    }
+
+    public function batch_list(Request $request) {
+        try {
+            $response = apiHelper()->execute($request, '/api/applications/batch-list', 'POST');
+            if ($response['status'] == "error") {
+                return globalHelper()->ajaxErrorResponse($response['message']);
+            } else {
+                
+                $html_view = viewHelper()->createBatchList($response);                
                 return globalHelper()->ajaxSuccessResponse($html_view);
             }
         } catch (Exception $e) {

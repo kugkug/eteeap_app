@@ -112,6 +112,8 @@ class ValidatorHelper {
                     'company' => "required|string|max:255",
                     'company_address' => "required|string",
                     'skills' => "sometimes|string",
+                    'desired_course' => "required|string",
+                    'approved_course' => "sometimes|string",
                 ];
             break;
 

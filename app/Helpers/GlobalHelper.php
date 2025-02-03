@@ -201,8 +201,6 @@ class GlobalHelper {
     public function getApplicantInformation(int $id) {
         try {
             $user = User::where('id', $id)->get();
-            
-            
             return $user->toArray()[0];
 
         } catch(Exception $e) {
@@ -227,11 +225,13 @@ class GlobalHelper {
                 'company' => '',
                 'company_address' => '',
                 'skills' => '',
+                'desired_course' => '',
+                'approved_course' => '',
             ];
         }  
     }
 
-    public function getTimeline(int $sender_id, int $recipient_id): array {
+    public function getDetailedTimeline(int $sender_id, int $recipient_id): array {
         try {
             $arr_timelines = [];
             $timelines = Timeline::where('sender_id', $sender_id)
@@ -255,7 +255,31 @@ class GlobalHelper {
         }  
     }
 
-    public function logTimeline(int $recipient, string $action, string $description, string $assets= ''): void {
+    public function getTimeline(int $sender_id, int $recipient_id) {
+        try {
+            $arr_timelines = [];
+            $timelines = Timeline::where('sender_id', $sender_id)
+            ->orWhere('recipient_id', $recipient_id)
+            ->orderBy('created_at', 'desc')
+            ->with('sender')
+            ->with('recipient')
+            ->get();
+            
+            foreach($timelines->toArray() as $timeline) {
+                $date = Carbon::parse($timeline['created_at'])->format('Y-m-d');
+                $arr_timelines[] = $timeline['action'];
+            }
+            
+            return array_unique($arr_timelines);
+
+        } catch(Exception $e) {
+            
+            Log::channel('info')->info("Exception : ".$e->getMessage());
+            return [];
+        }  
+    }
+
+    public function logTimeline(int $recipient, string $action, string $description='', string $assets= ''): void {
         $sender = Auth::id();
 
         Timeline::create([

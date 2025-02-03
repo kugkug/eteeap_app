@@ -7,6 +7,14 @@
               <h3 class="card-title">
                 <i class="fa fa-users"></i> Applications
             </h3>
+            <div class="card-tools">
+                <select data-key="Courses" class="form-control" >
+                    <option value="">Courses</option>
+                    @foreach ($courses as $course_code => $course_desc)
+                        <option value="{{$course_code}}" >{{$course_desc}}</option>
+                    @endforeach
+                </select>
+            </div>
 
             
         </div>

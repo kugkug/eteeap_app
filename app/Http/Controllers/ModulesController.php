@@ -30,6 +30,8 @@ class ModulesController extends Controller {
 
     public function dashboard(Request $request) {
         
+        $this->data['timeline'] = globalHelper()->getTimeline(Auth::id(), Auth::id());
+
         $this->data['profile'] = globalHelper()->getApplicantProfile(Auth::id());
         return globalHelper()->makeView('pages.applicant.dashboard', $this->data, $request)->with([
             'current_user' => $request->current_user,
@@ -37,6 +39,7 @@ class ModulesController extends Controller {
     }
 
     public function information(Request $request) {
+        $this->data['courses'] = config('custom.courses');
         $this->data['profile'] = globalHelper()->getApplicantProfile(Auth::id());
         return globalHelper()->makeView('pages.applicant.information', $this->data, $request)->with([
             'current_user' => $request->current_user,
@@ -45,13 +48,25 @@ class ModulesController extends Controller {
     }
 
     public function documents(Request $request) {
-        
+        $this->data['document_statuses'] = config('custom.doc_status');
         $this->data['profile'] = globalHelper()->getApplicantProfile(Auth::id());
         $this->data['req_types'] = globalHelper()->getRequirementTypes();
         $this->data['documents'] = globalHelper()->getApplicantDocuments(Auth::id());
         
         $this->data['title'] = "Documents";
         return globalHelper()->makeView('pages.applicant.documents', $this->data, $request)->with([
+            'current_user' => $request->current_user,
+        ]);
+
+    }
+
+    public function timeline(Request $request) {
+        
+        $this->data['profile'] = globalHelper()->getApplicantProfile(Auth::id());
+        $this->data['timelines'] = globalHelper()->getDetailedTimeline(Auth::id(), Auth::id());
+        $this->data['timeline'] = globalHelper()->getTimeline(Auth::id(), Auth::id());
+
+        return globalHelper()->makeView('pages.applicant.timeline', $this->data, $request)->with([
             'current_user' => $request->current_user,
         ]);
 
@@ -75,16 +90,7 @@ class ModulesController extends Controller {
 
     }
 
-    public function timeline(Request $request) {
-        
-        $this->data['profile'] = globalHelper()->getApplicantProfile(Auth::id());
-        $this->data['timelines'] = globalHelper()->getTimeline(Auth::id(), Auth::id());
-
-        return globalHelper()->makeView('pages.applicant.timeline', $this->data, $request)->with([
-            'current_user' => $request->current_user,
-        ]);
-
-    }
+    
 
     public function messages(Request $request) {
         $this->data['profile'] = globalHelper()->getApplicantProfile(Auth::id());

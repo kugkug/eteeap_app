@@ -29,6 +29,7 @@ Route::middleware(['auth:sanctum', 'current_user'])->group(function() {
 
     Route::group(['prefix' => 'applications'], function() {
         Route::post('/list', [ApplicationController::class, 'list'])->name('api_application_list');
+        Route::post('/batch-list', [ApplicationController::class, 'batch_list'])->name('api_application_batch_list');
         Route::post('/process', [ApplicationController::class, 'process'])->name('api_application_process');
         Route::post('/invite', [ApplicationController::class, 'invite'])->name('api_application_invite');
         Route::post('/download', [ApplicationController::class, 'download'])->name('api_application_download');

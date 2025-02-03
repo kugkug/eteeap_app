@@ -49,4 +49,13 @@ return [
         'default' => 'Cannot continue, please call system administrator!',
     ],
 
+
+    'courses' => [
+        'BSN' => 'Bachelor of Science in Nursing',
+        'BSBA' => 'Bachelor of Science in Business Administration',
+        'BSHM' => 'Bachelor of Science in Hospitality Management',
+        'BSTM' => 'Bachelor of Science in Tourism Management',
+        'BSCS' => 'Bachelor of Science in Computer Science',
+        'BEE' => 'Bachelor in Elementary Education',
+    ],
 ];

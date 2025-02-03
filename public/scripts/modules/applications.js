@@ -1,11 +1,15 @@
 $(document).ready(function () {
     if ($(".div-table-data").length) {
-        _fetch("/execute/applications/list");
+        _fetch("/execute/applications/list", { course: "" });
     }
+
+    $("[data-key=Courses]").on("change", function () {
+        _fetch("/execute/applications/list", { course: $(this).val() });
+    });
 });
 
-function _fetch(targetUrl = "") {
-    ajaxRequest(targetUrl, "", "");
+function _fetch(targetUrl = "", data) {
+    ajaxRequest(targetUrl, data, "");
 }
 
 function _execWidget() {

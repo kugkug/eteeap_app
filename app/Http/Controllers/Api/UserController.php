@@ -45,6 +45,7 @@ class UserController extends Controller
 
             $user_data['access_type'] = 1;
             User::create($user_data);
+            
             Otp::updateOrCreate( ['identity' => $email], ['otp' => $otp] );
 
             $mail = globalHelper()->sendEmail('registration', $email, [
@@ -52,7 +53,7 @@ class UserController extends Controller
                 'fname' => $firstname,
                 'link' => url("/verify-email?email=").base64_encode($email),
             ]);
-            
+
             DB::commit();
 
             return [
@@ -167,7 +168,6 @@ class UserController extends Controller
 
     }
 
-
     public function profile_update(Request $request) {
         
         try {
@@ -179,6 +179,7 @@ class UserController extends Controller
             
             Profile::updateOrCreate(['user_id' => Auth::id()], $validated['validated']);
 
+            globalHelper()->logTimeline(Auth::id(), 'profile', 'Updating Profile');
             return [
                 'status' => 'ok',
                 'message' => "_systemAlert('info', 'Profile Updated!')",
