@@ -177,5 +177,35 @@ class ApplicationController extends Controller
         }
     }
 
+    public function download_pdf(Request $request)
+    {
+        try {
+            if ($request->course != "") {
+                $applicants = User::where('users.access_type', 1)
+                ->where('profiles.desired_course', $request->course)
+                ->leftJoin('profiles', 'users.id', '=', 'profiles.user_id')
+                ->with('profiles')
+                ->orderBy('users.lastname', 'asc')
+                ->get(['users.*', 'profiles.*', 'users.id as user_id', 'profiles.id as profile_id', 'profiles.user_id as user_profile_id'])->toArray();
+            } else {
+                $applicants = User::where('access_type', 1)
+                ->leftJoin('profiles', 'users.id', '=', 'profiles.user_id')
+                ->orderBy('lastname', 'asc')
+                ->get(['users.*', 'profiles.*', 'users.id as user_id', 'profiles.id as profile_id', 'profiles.user_id as user_profile_id'])->toArray();
+            }
+            
+            return [
+                'status' => 'ok',
+                'list' => $applicants
+            ];
+        } catch(GlobalException $ge) {
+            Log::channel('info')->info("Global : ".$ge->getMessage());
+            return ['status' => 'error'];
+        } catch(Exception $e) {
+            Log::channel('info')->info("Global : ".$e->getMessage());
+            return ['status' => 'error'];
+        }
+    }
+
     
 }

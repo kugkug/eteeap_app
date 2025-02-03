@@ -6,10 +6,35 @@ $(document).ready(function () {
     $("[data-key=Courses]").on("change", function () {
         _fetch("/execute/applications/batch-list", { course: $(this).val() });
     });
+
+    $("[data-trigger=create-invite]").on("click", function () {
+        let invited = _getInvited();
+        if (invited.length > 0) {
+            $("#div-send-invitation").removeClass("d-none");
+        } else {
+            _systemAlert("alert", "No Application Selected!");
+        }
+    });
+
+    $("[data-trigger=send-bulk-email]").on("click", function () {});
 });
 
 function _fetch(targetUrl = "", data) {
     ajaxRequest(targetUrl, data, "");
+}
+
+function _getInvited() {
+    let parentTrs = $(".div-table-batch").find("tr");
+    let account_ids = [];
+
+    for (const parentTr of parentTrs) {
+        let tds = $(parentTr).find("td");
+        let btn = $(tds[0]).find("button")[0];
+
+        account_ids.push($(btn).attr("data-id"));
+    }
+
+    return account_ids;
 }
 
 function _execWidget() {
@@ -21,11 +46,11 @@ function _execWidget() {
         let fullname = $(tds[0]).text();
         let course = $(tds[1]).text();
 
-        $(parentTr).fadeOut();
+        $(parentTr).hide();
 
         let add_elem = `<tr>
                         <td>
-                            <button class="btn btn-danger btn-sm" data-id="${account_id}" data-trigger="batch-min"> 
+                            <button class="btn btn-danger" data-id="${account_id}" data-trigger="batch-min"> 
                                 <i class="fas fa-angle-double-left"></i> Remove
                             </button>
                         </td>
@@ -41,12 +66,12 @@ function _execWidget() {
     $("[data-trigger=batch-min]").on("click", function () {
         let account_id = $(this).attr("data-id");
         let parentTr = $(this).closest("tr")[0];
-        $(parentTr).fadeOut(500, function () {
-            $(parentTr).remove();
-        });
+        $(parentTr).remove();
+        $($(`[data-id=${account_id}]`).closest("tr")).show();
 
-        $($(`[data-id=${account_id}]`).closest("tr")).fadeIn();
-        // $(".div-table-data").append(add_elem);
+        if (_getInvited().length <= 0) {
+            $("#div-send-invitation").removeClass("d-none").addClass("d-none");
+        }
         _execWidget();
     });
 }

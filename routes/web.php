@@ -66,6 +66,7 @@ Route::group(['prefix' => 'execute'], function() {
         Route::post('process', [AdminExecController::class, 'process'])->name('web_execute_logout');
         Route::post('invite', [AdminExecController::class, 'invite'])->name('web_invite_logout');
         Route::post('download', [AdminExecController::class, 'download'])->name('web_execute_download');
+        Route::post('download-pdf', [AdminExecController::class, 'download_pdf'])->name('web_execute_download_pdf');
     });
     
 });

@@ -26,9 +26,13 @@
                   
                   </div>
               </div>
-          </div>
-        <!-- /.card-body -->
-      </div>
+        </div>
+        <div class="card-footer">
+            <button class="btn btn-danger" data-trigger="download-pdf">
+                <i class="fa fa-file-pdf"></i> Download PDF
+            </button>
+        </div>
+    </div>
 </div>
 @include('partials.admin.footer')
 

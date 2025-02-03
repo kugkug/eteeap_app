@@ -238,11 +238,11 @@ class ViewHelper {
                 $desired_course = $account['desired_course'] != "" ? config('custom.courses')[$account['desired_course']] : '-';
                 
                 $actions = $actions = $account['desired_course'] != "" ? "
-                            <button class='btn btn-info btn-sm' data-id='".$account['user_id']."' data-trigger='batch-add'>
+                            <button class='btn btn-info ' data-id='".$account['user_id']."' data-trigger='batch-add'>
                                 Add <i class='fas fa-angle-double-right'></i>
                             </button>" : '-';
 
-                $actions = "<button class='btn btn-info btn-sm' data-id='".$account['user_id']."' data-trigger='batch-add'>
+                $actions = "<button class='btn btn-info ' data-id='".$account['user_id']."' data-trigger='batch-add'>
                                 Add <i class='fas fa-angle-double-right'></i>
                             </button>";
                             

@@ -6,6 +6,12 @@ $(document).ready(function () {
     $("[data-key=Courses]").on("change", function () {
         _fetch("/execute/applications/list", { course: $(this).val() });
     });
+
+    $("[data-trigger=download-pdf]").on("click", function () {
+        _fetch("/execute/administrator/download-pdf", {
+            course: $("[data-key=Courses]").val(),
+        });
+    });
 });
 
 function _fetch(targetUrl = "", data) {
