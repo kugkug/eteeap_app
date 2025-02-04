@@ -70,11 +70,14 @@
             <p>Hi {{ $data['fname'] }}, </p>
 
             <p>Based on the initial evaluation of your documents, you have met the minimum qualifications to apply for
-                admission in the ETEEAP.</p>
+                admission in the ETEEAP for {{ $data['course'] }} program.</p>
+            
+            <p>
+                We would like to invite you for a face to face interview on <strong> {{ $data['date'] }} </strong> at <strong> {{ $data['time'] }}</strong>
+            </p>
 
             <p>Please be advised that the alignment of your preferred course to your work experience and your acceptance
-                in
-                the program will be decided upon by our panel of assessors after they have further evaluated your
+                in the program will be decided upon by our panel of assessors after they have further evaluated your
                 credentials.</p>
 
             <p>
@@ -86,11 +89,9 @@
 
             <p>Good Moral Character</p>
 
-            <p>In line with this, kindly prepare your 2 (Pink) Clearbook and insert all the requirements and kindly wait
-                for the scheduled interview email</p>
+            <p>In line with this, kindly prepare your 2 (Pink) Clearbook and insert all the requirements.</p>
 
-
-            <p>We're happy to signed up for Arellano University - ETEEAP App.</p>
+            <p>We're happy to signed up for Arellano University - ETEEAP Team</p>
             <p>ETEEAP-AU</p>
         </div>
         <div class="footer">

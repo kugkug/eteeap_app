@@ -16,7 +16,21 @@ $(document).ready(function () {
         }
     });
 
-    $("[data-trigger=send-bulk-email]").on("click", function () {});
+    $("[data-trigger=send-bulk-email]").on("click", function (e) {
+        e.preventDefault();
+        let invited = _getInvited();
+        let parentForm = $(this).closest("form");
+
+        let json_data_form = JSON.parse(_collectFields(parentForm));
+        if (invited.length > 0) {
+            ajaxRequest("/execute/administrator/batch-invite", {
+                invited_ids: invited,
+                ...json_data_form,
+            });
+        } else {
+            _systemAlert("alert", "No Application Selected!");
+        }
+    });
 });
 
 function _fetch(targetUrl = "", data) {

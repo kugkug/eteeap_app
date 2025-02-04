@@ -15,7 +15,6 @@ $(document).ready(function () {
                 }
 
                 let json_data_form = JSON.parse(_collectFields(parentForm));
-                console.log(json_data_form);
                 ajaxRequest(
                     "/execute/applicants/save",
                     json_data_form,

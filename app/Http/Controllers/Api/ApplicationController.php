@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers\Api;
 
+use Barryvdh\DomPDF\Facade\Pdf as PDF;
 use App\Exceptions\GlobalException;
 use App\Http\Controllers\Controller;
 use App\Models\Document;
+use App\Models\Profile;
 use App\Models\User;
 use Exception;
 use Illuminate\Http\Request;
@@ -129,6 +131,50 @@ class ApplicationController extends Controller
         }
     }
 
+    public function batch_invite(Request $request)
+    {        
+        try {
+            $invited_ids = $request->invited_ids;
+            
+            $approved_course = $request->ApprovedCourse;
+            $interview_date = $request->InterviewDate;
+            $interview_time = $request->InterviewTime;
+            
+            $user_infos = User::whereIn('id', $invited_ids)->get()->toArray();
+
+            $arr_is_sent = [];
+            foreach($user_infos as $user_info ) {
+                $is_sent = globalHelper()->sendEmail('invite', 'jesthonymorales@gmail.com', [
+                    'fname' => ucfirst(strtolower($user_info['firstname'])),
+                    'course' => config('custom.courses')[$approved_course],
+                    'date' => date("F d, Y", strtotime($interview_date)),
+                    'time' => date("H:i a", strtotime($interview_time)),
+                ]);
+
+                $arr_is_sent[] = $is_sent;
+
+                User::where('id', $user_info['id'])->update(['application_status' => config('custom.application_status')['Passed']]);
+                Document::where('user_id', $user_info['id'])->update(['status' => config('custom.doc_status')['Approved']]);
+                Profile::where('user_id', $user_info['id'])->update(['approved_course' => $approved_course]);
+            }
+
+            return [
+                'status' => 'ok',
+                'message' => "_confirm('info', 'Applicants Notified!')",
+                'is_sent' => $arr_is_sent,
+            ];
+                
+        } catch(GlobalException $ge) {
+            Log::channel('info')->info("Global : ".$ge->getMessage());
+            return ['status' => 'error'];
+            // throw new GlobalException($ge->getMessage());
+        } catch(Exception $e) {
+            Log::channel('info')->info("Exceptioon : ".$e->getMessage());
+            return ['status' => 'error'];
+            // throw new GlobalException($ge->getMessage());
+        }
+    }
+    
     public function download(Request $request)
     {
         try { 
@@ -194,10 +240,28 @@ class ApplicationController extends Controller
                 ->get(['users.*', 'profiles.*', 'users.id as user_id', 'profiles.id as profile_id', 'profiles.user_id as user_profile_id'])->toArray();
             }
             
+            $pdf = PDF::loadView('pdfs.applications', ['list' => $applicants]);
+            $path = public_path('pdfs/');
+            $fileName =  'Applications_'.date("YmdHis").'.pdf';
+            $pdf->save($path . '/' . $fileName);
+            $pdf->download($fileName);
+
+            $url = url("pdfs/$fileName");
+            $js = " var anchor = document.createElement('a');
+                    anchor.href = '".$url."';
+                    anchor.download = '".$fileName."';
+                    document.body.append(anchor);
+                    anchor.click();
+                    setTimeout(function () {
+                        document.body.removeChild(anchor);
+                    }, 1);
+                ";
+                
             return [
                 'status' => 'ok',
-                'list' => $applicants
+                'message' => $js,
             ];
+            
         } catch(GlobalException $ge) {
             Log::channel('info')->info("Global : ".$ge->getMessage());
             return ['status' => 'error'];

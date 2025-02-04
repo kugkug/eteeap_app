@@ -32,6 +32,7 @@ Route::middleware(['auth:sanctum', 'current_user'])->group(function() {
         Route::post('/batch-list', [ApplicationController::class, 'batch_list'])->name('api_application_batch_list');
         Route::post('/process', [ApplicationController::class, 'process'])->name('api_application_process');
         Route::post('/invite', [ApplicationController::class, 'invite'])->name('api_application_invite');
+        Route::post('/batch-invite', [ApplicationController::class, 'batch_invite'])->name('api_application_batch_invite');
         Route::post('/download', [ApplicationController::class, 'download'])->name('api_application_download');
         Route::post('/download_pdf', [ApplicationController::class, 'download_pdf'])->name('api_application_download_pdf');
     });

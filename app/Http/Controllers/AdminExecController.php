@@ -126,6 +126,25 @@ class AdminExecController extends Controller
         }
     }
 
+    public function batch_invite(Request $request) {
+        try {
+            $response = apiHelper()->execute($request, '/api/applications/batch-invite', 'POST');
+
+            if ($response['status'] == "error") {
+                return globalHelper()->ajaxErrorResponse($response['message']);
+            } else {
+                
+                return globalHelper()->ajaxSuccessResponse($response['message']);
+                
+                // $html_view = viewHelper()->createApplicantsTable($response);
+                // return globalHelper()->ajaxSuccessResponse($html_view);
+            }
+        } catch (Exception $e) {
+            Log::channel('info')->info(json_encode($e->getTrace()));
+            return globalHelper()->ajaxErrorResponse('');
+        }
+    }
+
     public function download(Request $request) {
         try {
             $response = apiHelper()->execute($request, '/api/applications/download', 'POST');
@@ -148,27 +167,12 @@ class AdminExecController extends Controller
     public function download_pdf(Request $request) {
         try {
             $response = apiHelper()->execute($request, '/api/applications/download_pdf', 'POST');
-
-            $pdf = PDF::loadView('pdfs.applications', $response);
-            $path = public_path('pdfs/');
-            $fileName =  'applications_'.date("Y-m-d").'.pdf';
-            $pdf->save($path . '/' . $fileName);
-            return $pdf->download($fileName);
-            // $pdf = resolve (new PDF)->loadView('pdfs.applications', $response['list']);
-            // $content = $pdf->download()->getOriginalContent();
-
-            // Storage::put('public/pdfs/, $pdf->output());
-            
-            // return $response;
-            // if ($response['status'] == "error") {
-            //     return globalHelper()->ajaxErrorResponse($response['message']);
-            // } else {
+            if ($response['status'] == "error") {
+                return globalHelper()->ajaxErrorResponse($response['message']);
+            } else {
                 
-            //     return globalHelper()->ajaxSuccessResponse($response['message']);
-                
-            //     // $html_view = viewHelper()->createApplicantsTable($response);
-            //     // return globalHelper()->ajaxSuccessResponse($html_view);
-            // }
+                return globalHelper()->ajaxSuccessResponse($response['message']);
+            }
         } catch (Exception $e) {
             Log::channel('info')->info(json_encode($e->getTrace()));
             return globalHelper()->ajaxErrorResponse('');
