@@ -147,12 +147,12 @@
                 <div class="row">
                     <div class="col-md-4">
                         <div class="nav flex-column nav-tabs h-100" role="tablist" aria-orientation="vertical">
-                            @php
-                                $status_array = [];    
-                                $statuses = "";
-                            @endphp
-
                             @foreach ($req_types as $req_type)
+                                @php	
+                                    $status_values = [];
+                                    $status_array = [];    
+                                    $statuses = "";
+                                @endphp	
 
                                 @if(isset($documents[$req_type['id']]))
 
@@ -168,21 +168,29 @@
                                         @endif
                                     @endforeach
                                 @endif
-                                
+
+
                                 @if (count($status_array) > 0)
                                     @php
+                                        $status_values = array_count_values($status_array);
                                         $statuses = join(" ", array_unique($status_array));
-                                    @endphp                                    
+                                    @endphp
                                 @endif
 
-                                <a class="nav-link {{$statuses}}" data-toggle="pill"
+                                <a class="nav-link mb-1 {{$statuses}}" data-toggle="pill"
                                     href="#req-tab-{{$req_type['id']}}" 
                                     role="tab" 
                                     aria-controls="req-tab-{{$req_type['id']}}" 
                                     aria-selected="false"
                                 >
                                     {{ $req_type['title']}}	
-                                </a>	
+
+                                    <div>
+                                        <span class="badge badge-success">{{ $status_values['Approved'] ?? 0 }}</span>
+                                        <span class="badge badge-danger">{{ $status_values['Rejected'] ?? 0}}</span>
+                                        <span class="badge badge-warning">{{$status_values['Pending'] ?? 0}}</span>
+                                    </div>
+                                </a>
                             @endforeach
                         </div>
                     </div>
@@ -249,7 +257,7 @@
             </div>
             <div class="card-footer">
                 <div class="d-flex justify-content-between">
-                    <button class="btn btn-success" data-action="invite" data-id="{{ $applicant['id'] }}">
+                    <button class="btn btn-success" data-trigger="create-invite" data-id="{{ $applicant['id'] }}">
                         Invite for Interview
                     </button>
 
@@ -263,6 +271,52 @@
     </div>
 </div>
 
+<div class="row d-none" id="div-send-invitation">
+    <div class="col-md-12">
+        <form action="">
+            <div class="card card-danger">
+                <div class="card-header">
+                    <h3 class="card-title">
+                        <i class="fas fa-mail-bulk"></i> Send Invitation
+                    </h3>
+                </div>
+                <!-- /.card-header -->
+                <div class="card-body">
+                    <div class="row">
+                        <div class="form-group col-md-4">
+                            <label for="">Approved Course</label>
+                            <select data-key="ApprovedCourse" class="form-control">
+                                <option value="">Courses</option>
+                                @foreach ($courses as $course_code => $course_desc)
+                                    <option value="{{$course_code}}" >{{$course_desc}}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label for="">Interview Date</label>
+                            <input type="date" class="form-control" data-key="InterviewDate" placeholder="Interview Date">
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label for="">Interview Time</label>
+                            <input type="time" class="form-control" data-key="InterviewTime" placeholder="Interview Time">
+                        </div>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <div class="d-flex justify-content-between">
+                    <p class="text-muted">Note: 
+                        <strong>Applications included in this bulk email will be automatically approved!</strong>
+                    </p>
+                    <button class="btn btn-danger" data-trigger="send-bulk-email" data-id="{{ $applicant['id'] }}">
+                        <i class="fas fa-mail-bulk"></i> Send Bulk Invitation
+                    </button>
+                    </div>
+                </div>
+                <!-- /.card-body -->
+            </div>
+        </form>
+    </div>
+</div>
 
 
 <div class="modal fade" id="modal-documents" aria-modal="true" role="dialog">
@@ -347,6 +401,8 @@
         </div>
     </div>
 </div>
+
+
 @include('partials.admin.footer')
 
 <script src="{{asset('scripts/modules/process.js')}}"></script>

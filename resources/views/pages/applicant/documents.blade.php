@@ -100,13 +100,13 @@
 				<div class="row">
 					<div class="col-md-4">
 					  <div class="nav flex-column nav-tabs h-100" role="tablist" aria-orientation="vertical">
-				
-						@php
-							$status_array = [];    
-							$statuses = "";
-						@endphp
-
+						
 						@foreach ($req_types as $req_type)
+							@php	
+								$status_values = [];
+								$status_array = [];    
+								$statuses = "";
+							@endphp	
 
 							@if(isset($documents[$req_type['id']]))
 
@@ -123,20 +123,28 @@
 								@endforeach
 							@endif
 							
+							
 							@if (count($status_array) > 0)
 								@php
+									$status_values = array_count_values($status_array);
 									$statuses = join(" ", array_unique($status_array));
-								@endphp                                    
+								@endphp
 							@endif
 
-							<a class="nav-link {{$statuses}}" data-toggle="pill"
+							<a class="nav-link mb-1 {{$statuses}}" data-toggle="pill"
 								href="#req-tab-{{$req_type['id']}}" 
 								role="tab" 
 								aria-controls="req-tab-{{$req_type['id']}}" 
 								aria-selected="false"
 							>
 								{{ $req_type['title']}}	
-							</a>	
+
+								<div>
+									<span class="badge badge-success">{{ $status_values['Approved'] ?? 0 }}</span>
+									<span class="badge badge-danger">{{ $status_values['Rejected'] ?? 0}}</span>
+									<span class="badge badge-warning">{{$status_values['Pending'] ?? 0}}</span>
+								</div>
+							</a>
 						@endforeach
 					  </div>
 					</div>

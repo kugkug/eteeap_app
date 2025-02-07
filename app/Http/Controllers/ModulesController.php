@@ -90,8 +90,6 @@ class ModulesController extends Controller {
 
     }
 
-    
-
     public function messages(Request $request) {
         $this->data['profile'] = globalHelper()->getApplicantProfile(Auth::id());
         return globalHelper()->makeView('pages.applicant.messages', $this->data, $request)->with([

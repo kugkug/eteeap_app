@@ -1,32 +1,10 @@
 $(document).ready(function () {
-    $("[data-trigger]").on("click", function () {
-        let trigger = $(this).attr("data-trigger");
+    $("[data-trigger=download-zip]").on("click", function () {
         let id = $(this).attr("data-id");
 
-        switch (trigger) {
-            case "download-zip":
-                ajaxRequest("/execute/administrator/download", {
-                    id: id,
-                });
-                break;
-
-            default:
-                ajaxRequest("/execute/administrator/process", {
-                    action: trigger,
-                    id: id,
-                    notes: $(
-                        $($(this).closest(".card")).find("textarea")[0]
-                    ).val(),
-                });
-                break;
-        }
-    });
-
-    $("[data-action]").on("click", function () {
-        let trigger = $(this).attr("data-trigger");
-        let id = $(this).attr("data-id");
-
-        send_invite(id);
+        ajaxRequest("/execute/administrator/download", {
+            id: id,
+        });
     });
 
     $("[data-key=doc-status]").on("change", function () {
@@ -36,10 +14,20 @@ $(document).ready(function () {
         if (status != "all") $("." + status).show();
         else $(".Pending, .Rejected, .Approved").show();
     });
-});
 
-function send_invite(id) {
-    ajaxRequest("/execute/administrator/invite", {
-        applicant_id: id,
+    $("[data-trigger=create-invite]").on("click", function () {
+        $("#div-send-invitation").removeClass("d-none");
     });
-}
+
+    $("[data-trigger=send-bulk-email]").on("click", function (e) {
+        e.preventDefault();
+
+        let parentForm = $(this).closest("form");
+        let json_data_form = JSON.parse(_collectFields(parentForm));
+
+        ajaxRequest("/execute/administrator/batch-invite", {
+            invited_ids: [$(this).attr("data-id")],
+            ...json_data_form,
+        });
+    });
+});
