@@ -144,7 +144,7 @@ class ApplicationController extends Controller
 
             $arr_is_sent = [];
             foreach($user_infos as $user_info ) {
-                $is_sent = globalHelper()->sendEmail('invite', 'jesthonymorales@gmail.com', [
+                $is_sent = globalHelper()->sendEmail('invite', $user_info['email'], [
                     'fname' => ucfirst(strtolower($user_info['firstname'])),
                     'course' => config('custom.courses')[$approved_course],
                     'date' => date("F d, Y", strtotime($interview_date)),
